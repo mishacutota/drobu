@@ -12,7 +12,6 @@ function makePizza(slices, eaten = [], size = 300) {
   s += `<circle cx="${cx}" cy="${cy}" r="${crustR}" fill="#d99a3a"/>`;
   s += `<circle cx="${cx}" cy="${cy}" r="${crustR - 4}" fill="#e8b86a"/>`;
   s += `<circle cx="${cx}" cy="${cy}" r="${cheeseR}" fill="#fcd34d"/>`;
-  s += `<circle cx="${cx}" cy="${cy}" r="${cheeseR}" fill="url(#cheeseGrad)" opacity="0.5"/>`;
 
   for (let i = 0; i < slices; i++) {
     if (!eatenSet.has(i)) continue;
@@ -48,10 +47,8 @@ function makePizza(slices, eaten = [], size = 300) {
       if (slices <= 4) {
         peps.push([cx + 34 * Math.cos(mid), cy + 34 * Math.sin(mid)]);
         peps.push([cx + 64 * Math.cos(mid), cy + 64 * Math.sin(mid)]);
-      } else if (slices <= 6) {
-        peps.push([cx + 48 * Math.cos(mid), cy + 48 * Math.sin(mid)]);
       } else {
-        peps.push([cx + 46 * Math.cos(mid), cy + 46 * Math.sin(mid)]);
+        peps.push([cx + 48 * Math.cos(mid), cy + 48 * Math.sin(mid)]);
       }
     }
   }
@@ -69,6 +66,10 @@ function makePizza(slices, eaten = [], size = 300) {
    ============================================================ */
 function mixedHTML(whole, num, den, size = '2.2rem') {
   return `<span class="mixed-display" style="font-size:${size}"><span class="whole-num">${whole}</span><span class="mf-frac"><span class="mf-num">${num}</span><span class="mf-bar"></span><span class="mf-den">${den}</span></span></span>`;
+}
+
+function fracHTML(num, den, size = '1.3rem', color = 'var(--primary)') {
+  return `<span class="big-frac" style="font-size:${size};color:${color}"><span class="num">${num}</span><span class="bar"></span><span class="den">${den}</span></span>`;
 }
 
 function segBar(total, segs) {
@@ -140,7 +141,9 @@ function renderStory() {
   document.getElementById('storyTitle').textContent = step.title;
   document.getElementById('storyText').textContent = step.text;
 
+  const prev = document.getElementById('storyPrev');
   const next = document.getElementById('storyNext');
+  prev.disabled = storyIdx === 0;
   if (storyIdx === storySteps.length - 1) {
     next.disabled = true;
     next.textContent = 'Готово! ✓';
@@ -157,8 +160,8 @@ function renderStory() {
 document.getElementById('storyNext').addEventListener('click', () => {
   if (storyIdx < storySteps.length - 1) { storyIdx++; renderStory(); }
 });
-document.getElementById('storyReset').addEventListener('click', () => {
-  storyIdx = 0; renderStory();
+document.getElementById('storyPrev').addEventListener('click', () => {
+  if (storyIdx > 0) { storyIdx--; renderStory(); }
 });
 renderStory();
 
@@ -168,179 +171,154 @@ renderStory();
 document.getElementById('partsPizza').innerHTML = makePizza(4, [3], 280);
 
 /* ============================================================
-   GALLERY
+   EQUIVALENT FRACTIONS
    ============================================================ */
-function makeChocolateSVG(size = 120) {
-  const cols = 4, rows = 3;
-  const cw = size / cols, ch = size / rows;
-  const eaten = [2, 5, 7, 8];
-  let s = `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%;height:auto">`;
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const i = r * cols + c;
-      const x = c * cw, y = r * ch;
-      if (eaten.includes(i)) {
-        s += `<rect x="${x + 3}" y="${y + 3}" width="${cw - 6}" height="${ch - 6}" rx="5" fill="#f7f0e4" stroke="#ddd0b8" stroke-width="1" stroke-dasharray="3,2"/>`;
-      } else {
-        s += `<rect x="${x + 3}" y="${y + 3}" width="${cw - 6}" height="${ch - 6}" rx="5" fill="#6b4423" stroke="#4a2e17" stroke-width="1.2"/>`;
-        s += `<rect x="${x + 10}" y="${y + 10}" width="${cw - 20}" height="${ch - 20}" rx="3" fill="#8b5a2b" opacity="0.55"/>`;
-      }
-    }
-  }
-  return s + '</svg>';
-}
-
-function makeBottleSVG(size = 110) {
-  const w = 46, h = 100;
-  const x = (size - w) / 2;
-  const y = 6;
-  const bodyTop = y + 22;
-  const bodyH = h - 22;
-  const waterY = bodyTop + bodyH * 0.5;
-  let s = `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%;height:auto">`;
-  s += `<rect x="${x}" y="${bodyTop}" width="${w}" height="${bodyH}" rx="12" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>`;
-  s += `<rect x="${x + 15}" y="${y}" width="${w - 30}" height="24" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>`;
-  s += `<rect x="${x + 2}" y="${waterY}" width="${w - 4}" height="${bodyTop + bodyH - waterY - 2}" rx="10" fill="#38bdf8" opacity="0.72"/>`;
-  s += `<line x1="${x + 2}" y1="${waterY}" x2="${x + w - 2}" y2="${waterY}" stroke="#0ea5e9" stroke-width="2"/>`;
-  return s + '</svg>';
-}
-
-function makeBatterySVG(size = 110) {
-  const w = 80, h = 40;
-  const x = (size - w) / 2 - 4;
-  const y = (size - h) / 2;
-  let s = `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%;height:auto">`;
-  s += `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="#fff" stroke="#334155" stroke-width="2.5"/>`;
-  s += `<rect x="${x + w + 2}" y="${y + h / 2 - 7}" width="6" height="14" rx="2" fill="#334155"/>`;
-  s += `<rect x="${x + 5}" y="${y + 5}" width="${(w - 10) * 0.5}" height="${h - 10}" rx="3" fill="#10b981"/>`;
-  return s + '</svg>';
-}
-
-function makeClockSVG(size = 110) {
-  const cx = size / 2, cy = size / 2, r = size / 2 - 6;
-  let s = `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%;height:auto">`;
-  s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="#334155" stroke-width="3"/>`;
-  for (let i = 0; i < 12; i++) {
-    const a = i * 30 * Math.PI / 180 - Math.PI / 2;
-    const x1 = cx + (r - 10) * Math.cos(a);
-    const y1 = cy + (r - 10) * Math.sin(a);
-    const x2 = cx + (r - 4) * Math.cos(a);
-    const y2 = cy + (r - 4) * Math.sin(a);
-    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#94a3b8" stroke-width="1.5"/>`;
-  }
-  s += `<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy + r * 0.4}" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>`;
-  s += `<line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - r * 0.65}" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>`;
-  s += `<circle cx="${cx}" cy="${cy}" r="4" fill="#dc4a4a"/>`;
-  return s + '</svg>';
-}
-
-function makeCoinsSVG(size = 110) {
-  let s = `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" style="max-width:100%;height:auto">`;
-  s += `<circle cx="${size/2}" cy="${size/2 + 8}" r="32" fill="#d4a017" stroke="#a17a0f" stroke-width="2"/>`;
-  s += `<circle cx="${size/2}" cy="${size/2 + 4}" r="32" fill="#fbbf24" stroke="#d4a017" stroke-width="2"/>`;
-  s += `<text x="${size/2}" y="${size/2 + 12}" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="20" fill="#7c4a03">50</text>`;
-  s += `<circle cx="${size/2 + 30}" cy="${size/2 + 22}" r="20" fill="#fbbf24" stroke="#d4a017" stroke-width="2"/>`;
-  s += `<text x="${size/2 + 30}" y="${size/2 + 29}" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="900" font-size="14" fill="#7c4a03">25</text>`;
-  return s + '</svg>';
-}
-
-const galleryItems = [
-  { title: 'Піца', svg: makePizza(4, [3], 110), frac: '1 з 4 = 1/4' },
-  { title: 'Шоколадка', svg: makeChocolateSVG(110), frac: '8 з 12 = 2/3' },
-  { title: 'Склянка води', svg: makeBottleSVG(110), frac: 'половина = 1/2' },
-  { title: 'Батарейка', svg: makeBatterySVG(110), frac: 'половина = 50%' },
-  { title: 'Годинник', svg: makeClockSVG(110), frac: 'пів на = 30/60 = 1/2' },
-  { title: 'Гроші', svg: makeCoinsSVG(110), frac: '50 коп = 1/2 грн' }
-];
-
-document.getElementById('gallery').innerHTML = galleryItems.map(item => `
-  <div class="gallery-card">
-    <div class="viz">${item.svg}</div>
-    <h4>${item.title}</h4>
-    <div class="frac-mini">${item.frac}</div>
-  </div>
-`).join('');
+document.getElementById('eqRow').innerHTML = `
+  <div class="eq-item">${makePizza(2, [1], 130)}<div class="eq-cap">1/2</div></div>
+  <div class="eq-equals">=</div>
+  <div class="eq-item">${makePizza(4, [2, 3], 130)}<div class="eq-cap">2/4</div></div>
+  <div class="eq-equals">=</div>
+  <div class="eq-item">${makePizza(8, [4, 5, 6, 7], 130)}<div class="eq-cap">4/8</div></div>
+`;
 
 /* ============================================================
-   ADDING & SUBTRACTING — VISUALS
+   DIFFERENT DENOMINATORS — VISUALS
    ============================================================ */
-document.getElementById('addVis').innerHTML = `
-  <div style="display:grid;gap:12px;max-width:400px;margin:0 auto">
-    <div>
-      <div style="font-weight:900;margin-bottom:6px;color:var(--orange);font-size:.9rem">2/7</div>
-      ${segBar(7, ['filled a','filled a','','','','',''])}
-    </div>
-    <div style="text-align:center;font-weight:900;color:var(--muted);font-size:1.3rem">+</div>
-    <div>
-      <div style="font-weight:900;margin-bottom:6px;color:var(--primary);font-size:.9rem">3/7</div>
-      ${segBar(7, ['filled b','filled b','filled b','','','',''])}
-    </div>
-    <div style="text-align:center;font-weight:900;color:var(--muted);font-size:1.3rem">=</div>
-    <div>
-      <div style="font-weight:900;margin-bottom:6px;color:var(--mint);font-size:.9rem">5/7</div>
-      ${segBar(7, ['filled a','filled a','filled b','filled b','filled b','',''])}
-    </div>
-  </div>
-`;
-
-document.getElementById('subVis').innerHTML = `
-  <div style="display:grid;gap:12px;max-width:400px;margin:0 auto">
-    <div>
-      <div style="font-weight:900;margin-bottom:6px;color:var(--mint);font-size:.9rem">5/8</div>
-      ${segBar(8, ['filled r','filled r','filled r','removed','removed','','',''])}
-    </div>
-    <div style="text-align:center;font-weight:900;color:var(--muted);font-size:1.3rem">−</div>
-    <div>
-      <div style="font-weight:900;margin-bottom:6px;color:var(--orange);font-size:.9rem">2/8</div>
-      ${segBar(8, ['filled a','filled a','','','','','',''])}
-    </div>
-    <div style="text-align:center;font-weight:900;color:var(--muted);font-size:1.3rem">=</div>
-    <div>
-      <div style="font-weight:900;margin-bottom:6px;color:var(--primary);font-size:.9rem">3/8</div>
-      ${segBar(8, ['filled r','filled r','filled r','','','','',''])}
-    </div>
-  </div>
-`;
-
-document.getElementById('mistakePizzas').innerHTML = `
+document.getElementById('diffWhy').innerHTML = `
   <div style="text-align:center">
-    ${makePizza(2, [1], 80)}
-    <div style="font-weight:900;margin-top:6px;font-size:.9rem">1/2</div>
+    ${makePizza(2, [1], 90)}
+    <div style="font-weight:900;margin-top:6px;font-size:.9rem;color:var(--orange)">1/2</div>
   </div>
   <div style="font-size:1.4rem;font-weight:900;color:var(--muted)">+</div>
   <div style="text-align:center">
-    ${makePizza(2, [1], 80)}
-    <div style="font-weight:900;margin-top:6px;font-size:.9rem">1/2</div>
+    ${makePizza(3, [1, 2], 90)}
+    <div style="font-weight:900;margin-top:6px;font-size:.9rem;color:var(--primary)">1/3</div>
   </div>
-  <div style="font-size:1.4rem;font-weight:900;color:var(--muted)">=</div>
-  <div style="text-align:center">
-    ${makePizza(1, [], 80)}
-    <div style="font-weight:900;margin-top:6px;font-size:.9rem;color:var(--mint)">1 ціла</div>
+  <div style="font-size:1rem;font-weight:900;color:var(--muted);max-width:220px;text-align:center">
+    Різні шматки — не можна просто додати верхні числа!
   </div>
 `;
 
+document.getElementById('diffAddVis').innerHTML = `
+  <div class="seg-stack">
+    <div>
+      <div class="seg-cap" style="color:var(--orange)">1/2 = 3/6</div>
+      ${segBar(6, ['filled a','filled a','filled a','','',''])}
+    </div>
+    <div class="seg-op">+</div>
+    <div>
+      <div class="seg-cap" style="color:var(--primary)">1/3 = 2/6</div>
+      ${segBar(6, ['filled b','filled b','','','',''])}
+    </div>
+    <div class="seg-op">=</div>
+    <div>
+      <div class="seg-cap" style="color:var(--mint)">5/6</div>
+      ${segBar(6, ['filled a','filled a','filled a','filled b','filled b',''])}
+    </div>
+  </div>
+`;
+
+/* Віднімання — БЕЗ перекреслювання: показуємо лише те, що залишилось */
+document.getElementById('diffSubVis').innerHTML = `
+  <div class="seg-stack">
+    <div>
+      <div class="seg-cap" style="color:var(--orange)">3/4 = 9/12</div>
+      ${segBar(12, ['filled r','filled r','filled r','filled r','filled r','filled r','filled r','filled r','filled r','','',''])}
+    </div>
+    <div class="seg-op">−</div>
+    <div>
+      <div class="seg-cap" style="color:var(--primary)">1/3 = 4/12</div>
+      ${segBar(12, ['filled a','filled a','filled a','filled a','','','','','','','',''])}
+    </div>
+    <div class="seg-op">=</div>
+    <div>
+      <div class="seg-cap" style="color:var(--mint)">5/12</div>
+      ${segBar(12, ['filled r','filled r','filled r','filled r','filled r','','','','','','',''])}
+    </div>
+  </div>
+`;
+
+document.getElementById('diffMixedOp').innerHTML = `
+  ${mixedHTML(1, 1, 2, '1.9rem')}
+  <span class="op-sign">+</span>
+  ${mixedHTML(2, 1, 3, '1.9rem')}
+  <span class="op-sign">=</span>
+  <span class="mixed-display" style="font-size:2.1rem;color:var(--mint)"><span class="whole-num" style="color:var(--mint)">3</span><span class="mf-frac"><span class="mf-num">5</span><span class="mf-bar"></span><span class="mf-den">6</span></span></span>
+`;
+
 /* ============================================================
-   MIXED NUMBERS — VISUALS
+   CUTTING VISUALS (1/2 → 3/6, 1/3 → 2/6)
+   ============================================================ */
+document.getElementById('cutHalfBefore').innerHTML = makePizza(2, [1], 150);
+document.getElementById('cutHalfAfter').innerHTML = makePizza(6, [0, 1, 2], 150);
+document.getElementById('cutThirdBefore').innerHTML = makePizza(3, [1, 2], 150);
+document.getElementById('cutThirdAfter').innerHTML = makePizza(6, [0, 1], 150);
+
+/* ============================================================
+   MULTIPLICATION GRID  (2/3 · 4/5)
+   ============================================================ */
+function mulGrid(aNum, aDen, bNum, bDen) {
+  const rows = aDen, cols = bDen;
+  let cells = '';
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const inA = r < aNum;
+      const inB = c < bNum;
+      let cls = 'grid-cell';
+      if (inA && inB) cls += ' on-r';
+      else if (inA) cls += ' on-a';
+      else if (inB) cls += ' on-b';
+      cells += `<div class="${cls}"></div>`;
+    }
+  }
+  return `
+    <div class="grid-visual" style="grid-template-columns:repeat(${cols},30px)">${cells}</div>
+    <div class="grid-legend">
+      <span><i style="background:linear-gradient(135deg,var(--orange),#fbbf24)"></i>${aNum}/${aDen} піци</span>
+      <span><i style="background:linear-gradient(135deg,var(--primary),var(--pink))"></i>${bNum}/${bDen} від неї</span>
+      <span><i style="background:linear-gradient(135deg,var(--mint),var(--sky))"></i>результат ${aNum * bNum}/${aDen * bDen}</span>
+    </div>
+  `;
+}
+
+document.getElementById('multGrid').innerHTML = mulGrid(2, 3, 4, 5) + `
+  <p class="rule-cap" style="margin-top:16px">
+    Уся піца розбита на <b>3 · 5 = 15</b> клітинок. Ми взяли <b>2 · 4 = 8</b> зелених. Отже <b>8/15</b>.
+  </p>
+`;
+
+/* ============================================================
+   DIVISION VISUAL (1/2 : 1/4 = 2)
+   ============================================================ */
+document.getElementById('divGrid').innerHTML = `
+  <div class="seg-stack">
+    <div>
+      <div class="seg-cap" style="color:var(--orange)">1/2 = 2/4 — половина піци</div>
+      ${segBar(4, ['filled a','filled a','',''])}
+    </div>
+    <div class="seg-op">:</div>
+    <div>
+      <div class="seg-cap" style="color:var(--primary)">1/4 — один шматок-чверть</div>
+      ${segBar(4, ['filled b','','',''])}
+    </div>
+    <div class="seg-op">=</div>
+    <div>
+      <div class="seg-cap" style="color:var(--mint)">2 — стільки чвертей вміщується</div>
+      ${segBar(4, ['filled r','filled r','',''])}
+    </div>
+  </div>
+  <p class="rule-cap" style="margin-top:14px">
+    Ділення питає «<b>скільки разів</b> дільник вміщується в першому дробі». У половині — <b>2</b> чверті.
+  </p>
+`;
+
+/* ============================================================
+   MIXED NUMBERS
    ============================================================ */
 document.getElementById('mixedVis1').innerHTML = makeMixedVisual(3, 3, 7, 60);
-document.getElementById('mixedNum1').innerHTML = mixedHTML(3, 3, 7, '2.4rem');
-
-document.getElementById('addM1').innerHTML = mixedHTML(2, 3, 7, '1.9rem');
-document.getElementById('addM2').innerHTML = mixedHTML(1, 2, 7, '1.9rem');
-document.getElementById('addM3').innerHTML = mixedHTML(3, 5, 7, '2.1rem').replace('color:var(--primary)', 'color:var(--mint)');
-
-document.getElementById('subM1').innerHTML = mixedHTML(3, 5, 8, '1.9rem');
-document.getElementById('subM2').innerHTML = mixedHTML(1, 2, 8, '1.9rem');
-document.getElementById('subM3').innerHTML = mixedHTML(2, 3, 8, '2.1rem').replace('color:var(--primary)', 'color:var(--mint)');
-
-document.getElementById('borrowM1').innerHTML = mixedHTML(3, 1, 7, '2rem');
-document.getElementById('borrowM2').innerHTML = mixedHTML(2, 8, 7, '2rem').replace('color:var(--primary)', 'color:var(--orange)');
-document.getElementById('borrowM3').innerHTML = mixedHTML(2, 8, 7, '1.9rem');
-document.getElementById('borrowM4').innerHTML = mixedHTML(1, 4, 7, '1.9rem');
-document.getElementById('borrowM5').innerHTML = mixedHTML(1, 4, 7, '2.1rem').replace('color:var(--primary)', 'color:var(--mint)');
 
 /* ============================================================
-   NEW: VISUAL MIXED EXAMPLES GENERATOR (6 EXAMPLES)
+   MIXED NUMBERS — GALLERY
    ============================================================ */
 const visualExamples = [
   { n: 3, d: 2 },
@@ -351,169 +329,85 @@ const visualExamples = [
   { n: 8, d: 3 }
 ];
 
-const examplesHTML = visualExamples.map(ex => {
+document.getElementById('mixedGallery').innerHTML = visualExamples.map(ex => {
   const whole = Math.floor(ex.n / ex.d);
   const rem = ex.n % ex.d;
 
-  // Ліва частина - всі шматки
-  let leftSide = '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:200px;margin:0 auto;">';
-  for(let i=0; i<ex.n; i++) leftSide += `<div style="filter:drop-shadow(0 4px 6px rgba(180,90,20,.15))">${makeSlice(ex.d, 40)}</div>`;
+  let leftSide = '<div class="ex-side">';
+  for (let i = 0; i < ex.n; i++) leftSide += `<div class="ex-pizza">${makeSlice(ex.d, 40)}</div>`;
   leftSide += '</div>';
 
-  // Права частина - цілі піци + залишок
-  let rightSide = '<div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:200px;margin:0 auto;align-items:center;">';
-  for(let i=0; i<whole; i++) rightSide += `<div style="filter:drop-shadow(0 4px 6px rgba(180,90,20,.15))">${makeWhole(45)}</div>`;
-  for(let i=0; i<rem; i++) rightSide += `<div style="filter:drop-shadow(0 4px 6px rgba(180,90,20,.15))">${makeSlice(ex.d, 40)}</div>`;
+  let rightSide = '<div class="ex-side">';
+  for (let i = 0; i < whole; i++) rightSide += `<div class="ex-pizza">${makeWhole(45)}</div>`;
+  for (let i = 0; i < rem; i++) rightSide += `<div class="ex-pizza">${makeSlice(ex.d, 40)}</div>`;
   rightSide += '</div>';
 
   return `
     <div class="example-card">
       <div class="ex-header">
-        <span class="big-frac"><span class="num">${ex.n}</span><span class="bar"></span><span class="den">${ex.d}</span></span>
+        ${fracHTML(ex.n, ex.d, '1.6rem')}
         <span class="op-sign">=</span>
-        <span class="mixed-display" style="font-size:2rem;">
+        <span class="mixed-display" style="font-size:1.8rem">
           <span class="whole-num">${whole}</span>
           ${rem > 0 ? `<span class="mf-frac"><span class="mf-num">${rem}</span><span class="mf-bar"></span><span class="mf-den">${ex.d}</span></span>` : ''}
         </span>
       </div>
       <div class="ex-visual">
         ${leftSide}
-        <div class="eq-equals" style="font-size:1.5rem;margin:0 10px;color:var(--primary);">=</div>
+        <div class="eq-equals">=</div>
         ${rightSide}
       </div>
     </div>
   `;
 }).join('');
 
-document.getElementById('examplesGrid').innerHTML = examplesHTML;
-
 /* ============================================================
-   EQUIVALENT
+   PERCENT CARDS
    ============================================================ */
-document.getElementById('eq1').innerHTML = makePizza(2, [1], 130);
-document.getElementById('eq2').innerHTML = makePizza(4, [2, 3], 130);
-document.getElementById('eq3').innerHTML = makePizza(8, [4, 5, 6, 7], 130);
-
-/* ============================================================
-   QUIZ
-   ============================================================ */
-const quizData = [
-  {
-    q: 'Яка піца показує половину (1/2)?',
-    opts: [makePizza(4, [3], 75), makePizza(2, [1], 75), makePizza(4, [1, 2, 3], 75), makePizza(1, [], 75)],
-    correct: 1,
-    explain: "Половина — це коли з'їдено 1 шматок з 2. Або 2 з 4 — це теж половина!"
-  },
-  {
-    q: 'Що показує нижнє число в дробі (знаменник)?',
-    opts: ["Скільки шматків з'їли", 'Скільки всього шматків', 'Скільки разів різали', 'Нічого не показує'],
-    correct: 1,
-    explain: 'Знаменник — на скільки рівних частин поділили ціле. Це всього шматків.'
-  },
-  {
-    q: 'Скільки відсотків у половини?',
-    opts: ['10%', '25%', '50%', '100%'],
-    correct: 2,
-    explain: 'Половина = 1/2 = 50/100 = 50%.'
-  },
-  {
-    q: '25% — це який дріб?',
-    opts: ['1/2', '1/4', '3/4', '1/5'],
-    correct: 1,
-    explain: '25% = 25/100 = 1/4. Це чверть піци.'
-  },
-  {
-    q: '1/2 + 1/4 = ?',
-    opts: ['2/6', '2/4', '3/4', '1/6'],
-    correct: 2,
-    explain: 'Зводимо до спільного знаменника 4: 1/2 = 2/4, тоді 2/4 + 1/4 = 3/4.'
-  },
-  {
-    q: '2/7 + 3/7 = ?',
-    opts: ['5/14', '5/7', '6/7', '1/7'],
-    correct: 1,
-    explain: 'Знаменники однакові — додаємо тільки чисельники: 2+3=5. Знаменник 7 залишаємо. Буде 5/7.'
-  },
-  {
-    q: '5/8 − 2/8 = ?',
-    opts: ['3/0', '3/8', '7/8', '3/16'],
-    correct: 1,
-    explain: 'Віднімаємо чисельники: 5−2=3. Знаменник 8 залишаємо. Буде 3/8.'
-  },
-  {
-    q: '3 1/7 − 1 4/7 = ?',
-    opts: ['2 3/7', '1 4/7', '2 4/7', '1 3/7'],
-    correct: 1,
-    explain: '1/7 < 4/7, тому позичаємо 1 цілу: 3 1/7 = 2 8/7. Тоді 2 8/7 − 1 4/7 = 1 4/7.'
-  }
+const percentItems = [
+  { pct: '50%', frac: '1/2', text: 'Половина піци', segs: ['filled a','filled a','',''] },
+  { pct: '25%', frac: '1/4', text: 'Чверть піци', segs: ['filled b','','',''] },
+  { pct: '75%', frac: '3/4', text: 'Три чверті', segs: ['filled a','filled a','filled a',''] },
+  { pct: '20%', frac: '1/5', text: 'Одна п\'ята', segs: ['filled b','','','',''] },
+  { pct: '10%', frac: '1/10', text: 'Одна десята', segs: ['filled a','','','','','','','','',''] },
+  { pct: '100%', frac: '1', text: 'Ціла піца', segs: ['filled a','filled a','filled a','filled a'] }
 ];
 
-const questionsBox = document.getElementById('questions');
-let answeredCount = 0;
-let correctCount = 0;
+document.getElementById('percentCards').innerHTML = percentItems.map(it => `
+  <div class="card" style="text-align:center">
+    <div class="pct-big">${it.pct}</div>
+    <div class="pct-frac">${it.frac}</div>
+    ${segBar(it.segs.length, it.segs)}
+    <p class="pct-text">${it.text}</p>
+  </div>
+`).join('');
 
-quizData.forEach((item, i) => {
-  const div = document.createElement('div');
-  div.className = 'q';
-  div.innerHTML = `
-    <h4><span class="num">${i + 1}</span><span>${item.q}</span></h4>
-    <div class="opts"></div>
-    <div class="feedback"></div>
-  `;
-  const optsWrap = div.querySelector('.opts');
-  const fb = div.querySelector('.feedback');
-
-  item.opts.forEach((opt, idx) => {
-    const btn = document.createElement('button');
-    btn.className = 'opt';
-    btn.type = 'button';
-    btn.innerHTML = opt;
-    btn.addEventListener('click', () => {
-      if (div.dataset.done) return;
-      div.dataset.done = '1';
-      answeredCount++;
-
-      const buttons = optsWrap.querySelectorAll('.opt');
-      buttons.forEach(b => b.disabled = true);
-      buttons[item.correct].classList.add('correct');
-
-      if (idx === item.correct) {
-        correctCount++;
-        fb.textContent = '✅ Правильно! ' + item.explain;
-        fb.className = 'feedback ok';
-      } else {
-        btn.classList.add('wrong');
-        fb.textContent = '❌ Майже! ' + item.explain;
-        fb.className = 'feedback no';
-      }
-
-      if (answeredCount === quizData.length) {
-        const sc = document.getElementById('score');
-        sc.style.display = 'block';
-        let msg;
-        if (correctCount === quizData.length) msg = '🏆 Ідеально! Ти справжній майстер дробів!';
-        else if (correctCount >= 6) msg = '👏 Дуже добре! Ще трохи — і буде ідеально.';
-        else if (correctCount >= 3) msg = '💪 Непогано! Перечитай тему про піцу і спробуй ще.';
-        else msg = '📚 Нічого страшного! Повернись до історії з піцою — і все вийде.';
-        sc.innerHTML = `<div class="big">${correctCount} / ${quizData.length}</div>${msg}`;
-        sc.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-    optsWrap.appendChild(btn);
-  });
-
-  questionsBox.appendChild(div);
-});
 
 /* ============================================================
-   SCROLL PROGRESS + REVEAL + BARS
+   SCROLL PROGRESS + REVEAL + RAIL + THEME
    ============================================================ */
 const prog = document.getElementById('progress');
-window.addEventListener('scroll', () => {
+const railDots = Array.from(document.querySelectorAll('.rail-dot'));
+const railSections = railDots
+  .map(d => document.getElementById(d.getAttribute('href').slice(1)))
+  .filter(Boolean);
+
+function onScroll() {
   const h = document.documentElement;
-  const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
-  prog.style.width = scrolled + '%';
-});
+  const max = h.scrollHeight - h.clientHeight;
+  prog.style.width = (max > 0 ? h.scrollTop / max * 100 : 0) + '%';
+
+  // какая тема сейчас на экране
+  const line = window.innerHeight * 0.35;
+  let active = 0;
+  railSections.forEach((sec, i) => {
+    if (sec.getBoundingClientRect().top <= line) active = i;
+  });
+  railDots.forEach((d, i) => d.classList.toggle('on', i === active));
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
 
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -525,16 +419,37 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-const barIO = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.bar > i').forEach(b => {
-        const w = b.style.width;
-        b.style.width = '0%';
-        setTimeout(() => b.style.width = w, 150);
-      });
-      barIO.unobserve(e.target);
-    }
+/* ---------- THEME SWITCH ---------- */
+const themeBtn = document.getElementById('themeToggle');
+const root = document.documentElement;
+
+function applyTheme(mode) {
+  root.setAttribute('data-theme', mode);
+  try { localStorage.setItem('drobu-theme', mode); } catch (e) {}
+  if (themeBtn) themeBtn.setAttribute('aria-pressed', mode === 'dark');
+}
+
+let saved = null;
+try { saved = localStorage.getItem('drobu-theme'); } catch (e) {}
+if (saved !== 'dark' && saved !== 'light') saved = 'light';
+applyTheme(saved);
+
+if (themeBtn) {
+  themeBtn.addEventListener('click', () => {
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
   });
-}, { threshold: 0.4 });
-document.querySelectorAll('.card').forEach(el => barIO.observe(el));
+}
+
+/* ---------- CURSOR GLOW ON CARDS (desktop only) ---------- */
+if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  const glowTargets = document.querySelectorAll(
+    '.card, .story-card, .gallery-card, .example-card, .topic-link, .flip-card, .percent-card'
+  );
+  glowTargets.forEach(el => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+}

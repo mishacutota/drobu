@@ -1,74 +1,86 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дроби та відсотки — на піці!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<svg style="display:none;">
-  <defs>
-    <radialGradient id="cheeseGrad">
-      <stop offset="0%" stop-color="#fff1b8"/>
-      <stop offset="100%" stop-color="#f5b82e"/>
-    </radialGradient>
-  </defs>
-</svg>
-
 <div id="progress"></div>
+<div class="auras" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<!-- ============ NAV ============ -->
-<nav>
-  <div class="nav-inner">
-    <div class="logo"><span class="dot">🍕</span> Дроби — просто!</div>
-    <div class="nav-links">
-      <a href="#story">Піца</a>
-      <a href="#parts">Будова</a>
-      <a href="#around">Навколо</a>
-      <a href="#adding">Дії</a>
-      <a href="#mixed">Мішані</a>
-      <a href="#visual-mixed">Дріб у мішане</a>
-      <a href="#equivalent">Рівні</a>
-      <a href="#percent">Відсотки</a>
-      <a href="#quiz">Тест</a>
-    </div>
-  </div>
-</nav>
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Перемкнути тему" aria-pressed="false">
+  <span class="ti ti-dark">🌙</span><span class="ti ti-light">☀️</span>
+</button>
+
+<!-- ============ RIGHT TOPIC RAIL ============ -->
+<aside class="rail" id="rail" aria-label="Навігація по темах">
+  <a class="rail-dot" href="#story" data-tip="1. Що таке дріб"><span>1</span></a>
+  <a class="rail-dot" href="#parts" data-tip="2. Будова дробу"><span>2</span></a>
+  <a class="rail-dot" href="#mixed" data-tip="3. Мішані числа"><span>3</span></a>
+  <a class="rail-dot" href="#adding" data-tip="4. Однакові знаменники"><span>4</span></a>
+  <a class="rail-dot" href="#diffden" data-tip="5. Різні знаменники"><span>5</span></a>
+  <a class="rail-dot" href="#multiply" data-tip="6. Множення"><span>6</span></a>
+  <a class="rail-dot" href="#divide" data-tip="7. Ділення"><span>7</span></a>
+  <a class="rail-dot" href="#percent" data-tip="8. Відсотки"><span>8</span></a>
+</aside>
 
 <!-- ============ HERO ============ -->
-<header class="hero">
-  <div class="container hero-grid">
-    <div>
-      <div class="sec-tag">Для дітей і дорослих · з нуля</div>
-      <h1>Дроби — це<br><span class="grad">просто піца!</span></h1>
-      <p>Забудь про нудні правила. Зараз на одній смачній піці ти зрозумієш усе: що таке дріб, чисельник, знаменник, як додавати, віднімати і навіть мішані числа. Обіцяю — буде легко.</p>
-      <a href="#story" class="btn">Почати з піци 🍕</a>
+<header id="top" class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <div class="badge">🎓 Математика · 5 клас</div>
+      <h1>Дроби та відсотки<br><span class="grad">на піці!</span></h1>
+      <p class="hero-sub">Найсмачніший спосіб зрозуміти, що таке дріб, як його додати, відняти і навіть перевести у відсотки. Без нудних правил — усе на шматках піци.</p>
+      <div class="hero-actions">
+        <a href="#story" class="btn btn-primary">Почати навчання 🍕</a>
+        <a href="#map" class="btn btn-ghost">Усі теми</a>
+      </div>
       <div class="hero-facts">
-        <div class="fact"><b>9</b><span>тем</span></div>
-        <div class="fact"><b>20+</b><span>картинок</span></div>
-        <div class="fact"><b>8</b><span>питань тесту</span></div>
+        <div class="fact"><b>8</b><span>тем</span></div>
+        <div class="fact"><b>100%</b><span>на піцах</span></div>
+        <div class="fact"><b>0</b><span>нудних формул</span></div>
       </div>
     </div>
-    <div class="hero-pizza" id="heroPizza">
-      <div class="hero-bubble b1">½ = 50%</div>
-      <div class="hero-bubble b2">¼ = 25%</div>
+    <div class="hero-visual">
+      <div class="hero-pizza" id="heroPizza"></div>
     </div>
   </div>
 </header>
+
+<!-- ============ TOPIC MAP ============ -->
+<section id="map" style="padding:44px 0 0">
+  <div class="container">
+    <div class="sec-head reveal" style="margin-bottom:20px">
+      <div class="sec-tag">Зміст · усе по порядку</div>
+      <h2>8 тем — від шматка піци до ділення дробів</h2>
+      <p class="lead">Іди зверху вниз: кожна тема спирається на попередню. Можна й стрибнути одразу в потрібну.</p>
+    </div>
+    <div class="topic-map reveal">
+      <a class="topic-link" href="#story"><span class="tn">1</span><span><span class="tt">Що таке дріб</span><span class="td">Піца, яку ріжуть на шматки</span></span></a>
+      <a class="topic-link" href="#parts"><span class="tn">2</span><span><span class="tt">Будова дробу</span><span class="td">Чисельник і знаменник</span></span></a>
+      <a class="topic-link" href="#mixed"><span class="tn">3</span><span><span class="tt">Мішані числа</span><span class="td">Цілі піци + шматки</span></span></a>
+      <a class="topic-link" href="#adding"><span class="tn">4</span><span><span class="tt">Однакові знаменники</span><span class="td">Додавання і віднімання</span></span></a>
+      <a class="topic-link" href="#diffden"><span class="tn">5</span><span><span class="tt">Різні знаменники</span><span class="td">Спільний знаменник, НСК</span></span></a>
+      <a class="topic-link" href="#multiply"><span class="tn">6</span><span><span class="tt">Множення дробів</span><span class="td">«Частина від частини»</span></span></a>
+      <a class="topic-link" href="#divide"><span class="tn">7</span><span><span class="tt">Ділення дробів</span><span class="td">Перевернути і помножити</span></span></a>
+      <a class="topic-link" href="#percent"><span class="tn">8</span><span><span class="tt">Відсотки</span><span class="td">Дріб зі знаменником 100</span></span></a>
+    </div>
+  </div>
+</section>
 
 <!-- ============ STORY ============ -->
 <section id="story" class="story-section">
   <div class="container">
     <div class="sec-head reveal">
       <div class="sec-tag">Тема 1 · Найголовніше</div>
-      <h2>Що таке дріб? Дивись на піцу</h2>
-      <p class="lead">Натискай «Далі» — і побачиш, як одна піца перетворюється на дроби. Кожен крок — один простий факт.</p>
+      <h2>Що таке дріб — на одній піці</h2>
+      <p class="lead">Прокрути кроки й подивись, як одна піца перетворюється на дроби.</p>
     </div>
-
     <div class="story-card reveal">
       <div class="story-visual">
         <div class="pizza-stage" id="pizzaStage"></div>
@@ -77,10 +89,10 @@
         <div class="story-step-num" id="storyStepNum">Крок 1 з 6</div>
         <div class="story-frac" id="storyFrac"></div>
         <h3 id="storyTitle">Ціла піца</h3>
-        <p id="storyText">Ось вона — одна ціла піца. Це число 1. Ціла річ.</p>
+        <p id="storyText"></p>
         <div class="story-nav">
-          <button class="btn" id="storyNext">Далі →</button>
-          <button class="btn ghost" id="storyReset">↺ Спочатку</button>
+          <button class="btn btn-ghost" id="storyPrev">← Назад</button>
+          <button class="btn btn-primary" id="storyNext">Далі →</button>
         </div>
         <div class="story-dots" id="storyDots"></div>
       </div>
@@ -89,36 +101,35 @@
 </section>
 
 <!-- ============ PARTS ============ -->
-<section id="parts" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
+<section id="parts">
   <div class="container">
     <div class="sec-head reveal">
       <div class="sec-tag">Тема 2</div>
-      <h2>Звідки беруться числа в дробі?</h2>
-      <p class="lead">У дробі завжди два числа. Верхнє і нижнє. Запам'ятай, що вони означають — і все стане на місця.</p>
+      <h2>З чого складається дріб</h2>
+      <p class="lead">Зверху — скільки шматків узяли. Знизу — на скільки шматків розрізали.</p>
     </div>
-
-    <div class="grid-2 reveal">
-      <div class="card parts-visual" id="partsPizza"></div>
+    <div class="parts-grid reveal">
+      <div class="parts-visual" id="partsPizza"></div>
       <div class="parts-labels">
         <div class="label-box">
           <div class="icon up">3</div>
           <div>
             <h4>Чисельник — зверху</h4>
-            <p>Скільки шматків ти <b>взяв</b> або <b>залишилось</b>. У нас — 3 шматки.</p>
+            <p>Скільки шматків ми взяли (з'їли, поклали, зафарбували).</p>
           </div>
         </div>
         <div class="label-box">
           <div class="icon down">4</div>
           <div>
             <h4>Знаменник — знизу</h4>
-            <p>На скільки шматків <b>розрізали</b> піцу. У нас — на 4 шматки.</p>
+            <p>На скільки рівних шматків розрізали ціле. Він показує розмір шматка.</p>
           </div>
         </div>
-        <div class="label-box" style="background:#fff7e6;border-color:#fde68a">
-          <div class="icon" style="background:linear-gradient(135deg,var(--cheese),var(--orange))">💡</div>
+        <div class="label-box">
+          <div class="icon up">3/4</div>
           <div>
             <h4>Читаємо так</h4>
-            <p><span class="big-frac" style="font-size:1.1rem"><span class="num">3</span><span class="bar"></span><span class="den">4</span></span> — «три четвертих». Взяли 3 частини з 4.</p>
+            <p>«Три четвертих» — узяли 3 шматки з 4.</p>
           </div>
         </div>
       </div>
@@ -126,425 +137,577 @@
   </div>
 </section>
 
-<!-- ============ AROUND US ============ -->
-<section id="around">
+<!-- ============ ADDING / SUBTRACTING (same denominator) ============ -->
+<!-- ============ MIXED NUMBERS (Тема 5) ============ -->
+<section id="mixed" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-tag">Тема 3</div>
-      <h2>Дроби навколо нас</h2>
-      <p class="lead">Дроби — не тільки в підручнику. Ось де вони живуть у реальному житті.</p>
+      <div class="sec-tag">Тема 3 · Мішані числа</div>
+      <h2>Мішані числа</h2>
+      <p class="lead">Коли піц більше, ніж одна: 3 цілих і 3/7 — це мішане число. Усі дроби на цій сторінці мають однаковий знаменник — так найпростіше.</p>
     </div>
 
-    <div class="grid-auto reveal" id="gallery"></div>
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:16px">🍕 Що таке 3 3/7?</h3>
+      <div class="mixed-visual" id="mixedVis1"></div>
+      <div class="op-row" style="margin-top:18px">
+        <span class="mixed-display" style="font-size:2rem"><span class="whole-num">3</span><span class="mf-frac"><span class="mf-num">3</span><span class="mf-bar"></span><span class="mf-den">7</span></span></span>
+        <span class="op-sign">=</span>
+        <span class="big-frac" style="font-size:1.6rem"><span class="num">24</span><span class="bar"></span><span class="den">7</span></span>
+      </div>
+      <p style="text-align:center;color:var(--muted);font-weight:800;font-size:.9rem;margin-top:10px">
+        3 цілих = 21/7, плюс 3/7 = 24/7.
+      </p>
+    </div>
+
+    <div class="grid-auto reveal" style="margin-bottom:24px">
+      <div class="card">
+        <h3 style="font-size:1.1rem;margin-bottom:10px">➡️ Мішане → неправильний дріб</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:10px">Цілу частину множимо на знаменник і додаємо чисельник.</p>
+        <div class="steps">
+          <div class="step">2 3/5 → 2·5 + 3 = 13 → <b>13/5</b></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:1.1rem;margin-bottom:10px">⬅️ Неправильний → мішане</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:10px">Чисельник ділимо на знаменник: частка — цілі, остача — чисельник.</p>
+        <div class="steps">
+          <div class="step">17/5 → 17 : 5 = 3 (ост. 2) → <b>3 2/5</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:6px">➕➖ Дії з мішаними числами</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px">Тут усе просто: цілі рахуємо з цілими, а дроби — з дробами. Знаменники однакові, тому їх не чіпаємо.</p>
+      <div class="steps">
+        <div class="step"><b>1 1/5 + 2 2/5:</b> цілі 1 + 2 = 3, дроби 1/5 + 2/5 = 3/5 → <b>3 3/5</b></div>
+        <div class="step"><b>4 3/8 − 2 1/8:</b> цілі 4 − 2 = 2, дроби 3/8 − 1/8 = 2/8 → <b>2 2/8 = 2 1/4</b></div>
+        <div class="step"><b>3 1/7 − 1 4/7:</b> дробів не вистачає (1/7 &lt; 4/7), тому позичаємо 1 цілу: 3 1/7 = 2 8/7. Далі 2 8/7 − 1 4/7 = <b>1 4/7</b></div>
+      </div>
+      <p style="color:var(--muted);font-size:.9rem;font-weight:800;margin-top:14px">
+        💡 Дроби з різними знаменниками тут не додаємо — цьому присвячена тема 5.
+      </p>
+    </div>
+
+    <div class="sec-head reveal" style="margin:34px 0 18px">
+      <h3 style="font-size:1.3rem;font-weight:900">Наочні приклади на піцах</h3>
+      <p class="lead" style="font-size:.95rem">Неправильний дріб = цілі піци + шматки.</p>
+    </div>
+    <div class="grid-auto reveal" id="mixedGallery"></div>
   </div>
 </section>
-
-<!-- ============ ADDING & SUBTRACTING ============ -->
 <section id="adding" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
   <div class="container">
     <div class="sec-head reveal">
       <div class="sec-tag">Тема 4 · Дії з дробами</div>
-      <h2>Додаємо і віднімаємо дроби</h2>
-      <p class="lead">Коли знизу однакові числа — працюємо тільки з верхніми. Знаменник залишаємо без змін!</p>
+      <h2>Додавання і віднімання з однаковими знаменниками</h2>
+      <p class="lead">Якщо шматки однакового розміру — просто рахуємо їх. Знаменник не чіпаємо.</p>
     </div>
 
-    <!-- rule -->
+    <div class="hl reveal" style="margin-bottom:26px">
+      <h3>🔑 Правило</h3>
+      <p>Додаємо/віднімаємо тільки <b>чисельники</b>. Знаменник залишається тим самим.</p>
+      <div>
+        <span class="pill">2/5 + 1/5 = 3/5</span>
+        <span class="pill">7/9 − 4/9 = 3/9 = 1/3</span>
+      </div>
+    </div>
+
+    <div class="grid-auto reveal">
+      <div class="card">
+        <h3 style="font-size:1.1rem;margin-bottom:10px">➕ Додавання</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:14px">Було 2 шматки, поклали ще 1 — стало 3 шматки з 5.</p>
+        <div class="op-row" style="font-size:1.2rem">
+          <span class="big-frac" style="font-size:1.3rem"><span class="num">2</span><span class="bar"></span><span class="den">5</span></span>
+          <span class="op-sign">+</span>
+          <span class="big-frac" style="font-size:1.3rem"><span class="num">1</span><span class="bar"></span><span class="den">5</span></span>
+          <span class="op-sign">=</span>
+          <span class="big-frac" style="font-size:1.3rem;color:var(--mint)"><span class="num">3</span><span class="bar"></span><span class="den">5</span></span>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:1.1rem;margin-bottom:10px">➖ Віднімання</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-bottom:14px">Було 5 шматків, з'їли 2 — залишилось 3 шматки з 6.</p>
+        <div class="op-row" style="font-size:1.2rem">
+          <span class="big-frac" style="font-size:1.3rem"><span class="num">5</span><span class="bar"></span><span class="den">6</span></span>
+          <span class="op-sign">−</span>
+          <span class="big-frac" style="font-size:1.3rem"><span class="num">2</span><span class="bar"></span><span class="den">6</span></span>
+          <span class="op-sign">=</span>
+          <span class="big-frac" style="font-size:1.3rem;color:var(--mint)"><span class="num">3</span><span class="bar"></span><span class="den">6</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-top:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🔁 Рівні дроби</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px">Один і той самий шматок піци можна назвати по-різному. Це допоможе далі!</p>
+      <div class="eq-row" id="eqRow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIFFERENT DENOMINATORS ============ -->
+<section id="diffden">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-tag">Тема 5 · Дроби з різними знаменниками</div>
+      <h2>Додавання і віднімання дробів з різними знаменниками</h2>
+      <p class="lead">Коли знизу різні числа — не можна просто додавати верхні. Спочатку треба «привести до спільного знаменника».</p>
+    </div>
+
     <div class="hl reveal" style="margin-bottom:26px">
       <h3>🔑 Головне правило</h3>
-      <p>Однакові знаменники → додаємо або віднімаємо <b>тільки чисельники</b>. Знаменник не чіпаємо!</p>
+      <p>Різні знаменники → спочатку знаходимо <b>спільний знаменник</b>, перетворюємо дроби, а тоді додаємо/віднімаємо чисельники.</p>
       <div>
-        <span class="pill">2/7 + 3/7 = 5/7</span>
-        <span class="pill">5/8 − 2/8 = 3/8</span>
+        <span class="pill">1/2 + 1/3 = 3/6 + 2/6 = 5/6</span>
+        <span class="pill">3/4 − 1/3 = 9/12 − 4/12 = 5/12</span>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🤔 Чому не можна додавати одразу?</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px">Тому що шматки <b>різного розміру</b>. Половина піци і третина піци — це різні шматки. Спочатку треба порізати обидві однаково.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap" id="diffWhy"></div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">📋 Алгоритм (4 кроки)</h3>
+      <div class="steps">
+        <div class="step"><b>1. Знайди спільний знаменник.</b> Це число, на яке діляться обидва знаменники (найменше спільне кратне, НСК).</div>
+        <div class="step"><b>2. Перетвори кожен дріб</b> до спільного знаменника (помнож чисельник і знаменник на одне число).</div>
+        <div class="step"><b>3. Додай або відніми чисельники.</b> Знаменник залишається спільним.</div>
+        <div class="step"><b>4. Скороти результат</b>, якщо можна. Якщо чисельник більший за знаменник — перетвори на мішане число.</div>
       </div>
     </div>
 
     <!-- ADDITION -->
     <div class="card reveal" style="margin-bottom:24px">
-      <h3 style="font-size:1.2rem;margin-bottom:6px">➕ Додавання: 2/7 + 3/7</h3>
-      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Додаємо чисельники: 2 + 3 = 5. Знаменник 7 залишаємо.</p>
-
-      <div id="addVis" style="margin-bottom:20px"></div>
-
+      <h3 style="font-size:1.2rem;margin-bottom:6px">➕ Додавання: 1/2 + 1/3</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Спільний знаменник для 2 і 3 — це 6. Перетворюємо: 1/2 = 3/6, 1/3 = 2/6. Додаємо: 3+2 = 5. Результат 5/6.</p>
+      <div id="diffAddVis" style="margin-bottom:20px"></div>
       <div class="op-row" style="font-size:1.3rem">
-        <span class="big-frac" style="font-size:1.4rem"><span class="num">2</span><span class="bar"></span><span class="den">7</span></span>
+        <span class="big-frac" style="font-size:1.4rem"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span>
         <span class="op-sign">+</span>
-        <span class="big-frac" style="font-size:1.4rem"><span class="num">3</span><span class="bar"></span><span class="den">7</span></span>
+        <span class="big-frac" style="font-size:1.4rem"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span>
         <span class="op-sign">=</span>
-        <span class="big-frac" style="font-size:1.4rem;color:var(--mint)"><span class="num">5</span><span class="bar"></span><span class="den">7</span></span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">3</span><span class="bar"></span><span class="den">6</span></span>
+        <span class="op-sign">+</span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--primary)"><span class="num">2</span><span class="bar"></span><span class="den">6</span></span>
+        <span class="op-sign">=</span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--mint)"><span class="num">5</span><span class="bar"></span><span class="den">6</span></span>
       </div>
       <p style="text-align:center;color:var(--muted);font-weight:800;font-size:.9rem;margin-top:8px">
-        Подивись на смужку: спочатку 2 шматки, потім ще 3 — разом 5 шматків з 7.
+        Спочатку різні шматки, потім — однакові шестини. Разом 5 шматків з 6.
       </p>
     </div>
 
     <!-- SUBTRACTION -->
     <div class="card reveal" style="margin-bottom:24px">
-      <h3 style="font-size:1.2rem;margin-bottom:6px">➖ Віднімання: 5/8 − 2/8</h3>
-      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Віднімаємо чисельники: 5 − 2 = 3. Знаменник 8 залишаємо.</p>
-
-      <div id="subVis" style="margin-bottom:20px"></div>
-
+      <h3 style="font-size:1.2rem;margin-bottom:6px">➖ Віднімання: 3/4 − 1/3</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Спільний знаменник для 4 і 3 — це 12. 3/4 = 9/12, 1/3 = 4/12. Віднімаємо: 9 − 4 = 5. Результат 5/12.</p>
+      <div id="diffSubVis" style="margin-bottom:20px"></div>
       <div class="op-row" style="font-size:1.3rem">
-        <span class="big-frac" style="font-size:1.4rem;color:var(--mint)"><span class="num">5</span><span class="bar"></span><span class="den">8</span></span>
+        <span class="big-frac" style="font-size:1.4rem"><span class="num">3</span><span class="bar"></span><span class="den">4</span></span>
         <span class="op-sign">−</span>
-        <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">2</span><span class="bar"></span><span class="den">8</span></span>
+        <span class="big-frac" style="font-size:1.4rem"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span>
         <span class="op-sign">=</span>
-        <span class="big-frac" style="font-size:1.4rem;color:var(--primary)"><span class="num">3</span><span class="bar"></span><span class="den">8</span></span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">9</span><span class="bar"></span><span class="den">12</span></span>
+        <span class="op-sign">−</span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--primary)"><span class="num">4</span><span class="bar"></span><span class="den">12</span></span>
+        <span class="op-sign">=</span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--mint)"><span class="num">5</span><span class="bar"></span><span class="den">12</span></span>
       </div>
       <p style="text-align:center;color:var(--muted);font-weight:800;font-size:.9rem;margin-top:8px">
-        Хрестики — це шматки, які прибрали. Залишилось 3 шматки з 8.
+        Було 9 дванадцятин, прибрали 4 — залишилось 5 дванадцятин.
       </p>
     </div>
 
-    <!-- COMMON MISTAKE -->
+    <!-- How to find common denominator -->
+    <div class="card reveal" style="margin-bottom:24px;background:#fff7e6;border-color:#fde68a">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🔍 Як знайти спільний знаменник?</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:12px">Спільний знаменник — це число, на яке діляться обидва знаменники (НСК). Найпростіший спосіб — помножити знаменники: 2·3 = 6. Але краще взяти найменший.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <div style="background:#fff;border:2px solid var(--line);border-radius:16px;padding:16px">
+          <div style="font-weight:900;margin-bottom:8px;color:var(--primary-dark)">Спосіб 1: помножити</div>
+          <p style="font-size:.9rem;color:var(--muted)">2 і 3 → 2·3 = 6. Завжди працює, але число може бути великим.</p>
+          <div style="margin-top:8px"><span class="pill">2·3 = 6</span><span class="pill">4·3 = 12</span></div>
+        </div>
+        <div style="background:#fff;border:2px solid var(--line);border-radius:16px;padding:16px">
+          <div style="font-weight:900;margin-bottom:8px;color:var(--mint)">Спосіб 2: найменший (НСК)</div>
+          <p style="font-size:.9rem;color:var(--muted)">Шукаємо найменше число, що ділиться на обидва. Для 2 і 4 це 4 (не 8).</p>
+          <div style="margin-top:8px"><span class="pill">НСК(2,4)=4</span><span class="pill">НСК(3,6)=6</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- more examples -->
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🧮 Ще приклади</h3>
+      <div class="steps">
+        <div class="step"><b>1/4 + 1/6:</b> НСК(4,6)=12. 1/4=3/12, 1/6=2/12. Разом: 3/12+2/12 = 5/12.</div>
+        <div class="step"><b>5/6 − 1/3:</b> НСК(6,3)=6. 1/3=2/6. Разом: 5/6−2/6 = 3/6 = 1/2.</div>
+        <div class="step"><b>2/3 + 1/4:</b> НСК(3,4)=12. 2/3=8/12, 1/4=3/12. Разом: 8/12+3/12 = 11/12.</div>
+        <div class="step"><b>7/8 − 1/4:</b> НСК(8,4)=8. 1/4=2/8. Разом: 7/8−2/8 = 5/8.</div>
+      </div>
+    </div>
+
+    <!-- mixed numbers with different denominators -->
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.2rem;margin-bottom:6px">🔢 Мішані числа з різними знаменниками: 1 1/2 + 2 1/3</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Тут і цілі, і дроби різні. Працюємо окремо: спочатку дроби приводимо до спільного знаменника.</p>
+      <div class="op-row" style="margin-bottom:22px" id="diffMixedOp"></div>
+      <div class="steps">
+        <div class="step"><b>Дроби:</b> 1/2 + 1/3 = 3/6 + 2/6 = 5/6</div>
+        <div class="step"><b>Цілі:</b> 1 + 2 = 3</div>
+        <div class="step"><b>Збираємо:</b> 3 цілих і 5/6 = <b style="color:var(--mint)">3 5/6</b></div>
+      </div>
+      <p style="margin-top:14px;font-size:.9rem;color:var(--muted);font-weight:700;text-align:center">
+        ✔ Перевірка через неправильні дроби: 3/2 + 7/3 = 9/6 + 14/6 = 23/6 = 3 5/6.
+      </p>
+    </div>
+
+    <!-- common mistake -->
     <div class="card reveal" style="margin-bottom:24px;background:#fff7e6;border-color:#fde68a">
       <h3 style="font-size:1.15rem;margin-bottom:14px">❗ Типова помилка: НЕ додавай знаменники!</h3>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px" id="mistakeGrid">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
         <div style="background:#fdecec;border:2px solid #fca5a5;border-radius:16px;padding:18px;text-align:center">
           <div style="font-size:1.6rem;margin-bottom:6px">❌</div>
-          <div style="font-weight:900;font-size:1.1rem;color:#b91c1c">1/2 + 1/2 = 2/4</div>
-          <div style="font-size:.85rem;color:#b91c1c;font-weight:700;margin-top:6px">Це неправильно! 2/4 — це половина, а не ціла.</div>
+          <div style="font-weight:900;font-size:1.1rem;color:#b91c1c">1/2 + 1/3 = 2/5</div>
+          <div style="font-size:.85rem;color:#b91c1c;font-weight:700;margin-top:6px">Це неправильно! Знаменники не додаються.</div>
         </div>
         <div style="background:#e8fbf3;border:2px solid #6ee7b7;border-radius:16px;padding:18px;text-align:center">
           <div style="font-size:1.6rem;margin-bottom:6px">✅</div>
-          <div style="font-weight:900;font-size:1.1rem;color:#047857">1/2 + 1/2 = 2/2 = 1</div>
-          <div style="font-size:.85rem;color:#047857;font-weight:700;margin-top:6px">Правильно! Дві половини — це ціла піца.</div>
+          <div style="font-weight:900;font-size:1.1rem;color:#047857">1/2 + 1/3 = 3/6 + 2/6 = 5/6</div>
+          <div style="font-size:.85rem;color:#047857;font-weight:700;margin-top:6px">Правильно! Спочатку спільний знаменник.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== END OF THEORY: why 6 ===== -->
+    <div class="card reveal" style="margin-bottom:24px;background:#f7f0ff;border-color:#d8c7ff">
+      <div class="sec-tag" style="margin-bottom:10px">Підсумок теорії · найважливіше</div>
+      <h3 style="font-size:1.25rem;margin-bottom:6px">🤯 Чому було 1/2 і 1/3, а стало ?/6? Звідки 6?!</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:18px">Це найчастіше запитання! Розберімо по кроках — і одразу на піцах.</p>
+
+      <div class="steps" style="margin-bottom:20px">
+        <div class="step"><b>Крок 1.</b> <b>1/2</b> — піцу розрізали на <b>2</b> шматки, взяли <b>1</b>. Шматок великий.</div>
+        <div class="step"><b>Крок 2.</b> <b>1/3</b> — піцу розрізали на <b>3</b> шматки, взяли <b>1</b>. Шматок менший.</div>
+        <div class="step"><b>Крок 3.</b> Шматки різного розміру — додавати не можна. Треба порізати обидві піци <b>однаково</b>.</div>
+        <div class="step"><b>Крок 4.</b> Шукаємо число, що ділиться і на 2, і на 3. Найменше таке — <b>6</b>, бо 6 : 2 = 3 і 6 : 3 = 2.</div>
+        <div class="step"><b>Крок 5.</b> Половину ріжемо ще на 3 частини: <b>1/2 = 3/6</b> (1·3 / 2·3).</div>
+        <div class="step"><b>Крок 6.</b> Третину ріжемо ще на 2 частини: <b>1/3 = 2/6</b> (1·2 / 3·2).</div>
+        <div class="step"><b>Крок 7.</b> Тепер шматки однакові — шестини. Додаємо: 3 + 2 = <b>5/6</b>.</div>
+      </div>
+
+      <!-- step-by-step pizzas: 1/2, cut, 3/6 -->
+      <div class="cut-grid">
+        <div class="cut-card">
+          <div class="cut-title" style="color:var(--orange)">1/2</div>
+          <div class="cut-pizza" id="cutHalfBefore"></div>
+          <div class="cut-sub">піца на 2 шматки</div>
+        </div>
+        <div class="cut-arrow"><span class="cut-scissors">✂️</span></div>
+        <div class="cut-card">
+          <div class="cut-title" style="color:var(--orange)">3/6</div>
+          <div class="cut-pizza" id="cutHalfAfter"></div>
+          <div class="cut-sub">кожен шматок ріжемо на 3</div>
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:20px" id="mistakePizzas"></div>
-    </div>
+      <div class="cut-grid">
+        <div class="cut-card">
+          <div class="cut-title" style="color:var(--primary)">1/3</div>
+          <div class="cut-pizza" id="cutThirdBefore"></div>
+          <div class="cut-sub">піца на 3 шматки</div>
+        </div>
+        <div class="cut-arrow"><span class="cut-scissors">✂️</span></div>
+        <div class="cut-card">
+          <div class="cut-title" style="color:var(--primary)">2/6</div>
+          <div class="cut-pizza" id="cutThirdAfter"></div>
+          <div class="cut-sub">кожен шматок ріжемо на 2</div>
+        </div>
+      </div>
 
-    <!-- SIMPLIFY -->
-    <div class="card reveal">
-      <h3 style="font-size:1.15rem;margin-bottom:14px">✂️ Не забувай скорочувати результат!</h3>
-      <div class="grid-2">
+      <div class="seg-stack">
         <div>
-          <div class="op-row" style="font-size:1.2rem">
-            <span class="big-frac" style="font-size:1.3rem"><span class="num">2</span><span class="bar"></span><span class="den">6</span></span>
-            <span class="op-sign">+</span>
-            <span class="big-frac" style="font-size:1.3rem"><span class="num">1</span><span class="bar"></span><span class="den">6</span></span>
-            <span class="op-sign">=</span>
-            <span class="big-frac" style="font-size:1.3rem"><span class="num">3</span><span class="bar"></span><span class="den">6</span></span>
-            <span class="op-sign">=</span>
-            <span class="big-frac" style="font-size:1.3rem;color:var(--mint)"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span>
+          <p class="seg-cap">1/2 = 3/6</p>
+          <div class="seg-bar">
+            <div class="seg filled a"></div><div class="seg filled a"></div><div class="seg filled a"></div>
+            <div class="seg"></div><div class="seg"></div><div class="seg"></div>
           </div>
-          <p style="color:var(--muted);font-size:.9rem;text-align:center;font-weight:700">3/6 скорочуємо на 3 → 1/2</p>
+          <p class="seg-note">3 шматки з 6</p>
         </div>
         <div>
-          <div class="op-row" style="font-size:1.2rem">
-            <span class="big-frac" style="font-size:1.3rem"><span class="num">3</span><span class="bar"></span><span class="den">4</span></span>
-            <span class="op-sign">+</span>
-            <span class="big-frac" style="font-size:1.3rem"><span class="num">3</span><span class="bar"></span><span class="den">4</span></span>
-            <span class="op-sign">=</span>
-            <span class="big-frac" style="font-size:1.3rem"><span class="num">6</span><span class="bar"></span><span class="den">4</span></span>
-            <span class="op-sign">=</span>
-            <span class="mixed-display" style="font-size:1.3rem;color:var(--mint)"><span class="whole-num">1</span><span class="mf-frac"><span class="mf-num">1</span><span class="mf-bar"></span><span class="mf-den">2</span></span></span>
+          <p class="seg-cap">1/3 = 2/6</p>
+          <div class="seg-bar">
+            <div class="seg filled b"></div><div class="seg filled b"></div>
+            <div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div>
           </div>
-          <p style="color:var(--muted);font-size:.9rem;text-align:center;font-weight:700">6/4 — неправильний → 1 2/4 = 1 1/2</p>
+          <p class="seg-note">2 шматки з 6</p>
+        </div>
+        <div>
+          <p class="seg-cap">Разом: 5/6</p>
+          <div class="seg-bar">
+            <div class="seg filled a"></div><div class="seg filled a"></div><div class="seg filled a"></div>
+            <div class="seg filled b"></div><div class="seg filled b"></div>
+            <div class="seg"></div>
+          </div>
+          <p class="seg-note">5 шматків з 6</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============ MIXED NUMBERS ============ -->
-<section id="mixed">
-  <div class="container">
-    <div class="sec-head reveal">
-      <div class="sec-tag">Тема 5 · Мішані числа</div>
-      <h2>Мішані числа: додаємо і віднімаємо</h2>
-      <p class="lead">Мішане число — це ціле + дріб. Наприклад, 3 3/7 — це 3 цілі піци і ще 3 шматки з 7.</p>
-    </div>
-
-    <!-- WHAT IS -->
-    <div class="card reveal" style="margin-bottom:24px">
-      <h3 style="font-size:1.2rem;margin-bottom:16px">🍕 Що таке мішане число?</h3>
-      <div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center">
-        <div id="mixedVis1"></div>
-        <div style="text-align:center;min-width:200px">
-          <div id="mixedNum1" style="margin-bottom:10px"></div>
-          <p style="color:var(--muted);font-weight:800;font-size:.95rem">3 цілі піци + 3 шматки з 7 = <b style="color:var(--primary-dark)">3 3/7</b></p>
-          <p style="color:var(--muted);font-size:.85rem;margin-top:6px">Це те саме, що 24/7. Але для дій зручніше тримати цілі й дроби окремо.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ADDITION -->
-    <div class="card reveal" style="margin-bottom:24px">
-      <h3 style="font-size:1.2rem;margin-bottom:6px">➕ Додавання мішаних чисел: 2 3/7 + 1 2/7</h3>
-      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Додаємо окремо цілі, окремо дроби. Знаменники однакові — просто!</p>
-
-      <div class="op-row" style="margin-bottom:22px">
-        <span id="addM1"></span>
-        <span class="op-sign">+</span>
-        <span id="addM2"></span>
-        <span class="op-sign">=</span>
-        <span id="addM3"></span>
-      </div>
-
-      <div class="steps">
-        <div class="step"><b>Цілі частини:</b> 2 + 1 = 3</div>
-        <div class="step"><b>Дроби:</b> 3/7 + 2/7 = 5/7</div>
-        <div class="step"><b>Збираємо разом:</b> 3 цілих і 5/7 = <b style="color:var(--mint)">3 5/7</b></div>
-      </div>
-    </div>
-
-    <!-- SIMPLE SUBTRACTION -->
-    <div class="card reveal" style="margin-bottom:24px">
-      <h3 style="font-size:1.2rem;margin-bottom:6px">➖ Віднімання (просте): 3 5/8 − 1 2/8</h3>
-      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Віднімаємо окремо цілі, окремо дроби.</p>
-
-      <div class="op-row" style="margin-bottom:22px">
-        <span id="subM1"></span>
-        <span class="op-sign">−</span>
-        <span id="subM2"></span>
-        <span class="op-sign">=</span>
-        <span id="subM3"></span>
-      </div>
-
-      <div class="steps">
-        <div class="step"><b>Цілі:</b> 3 − 1 = 2</div>
-        <div class="step"><b>Дроби:</b> 5/8 − 2/8 = 3/8</div>
-        <div class="step"><b>Результат:</b> <b style="color:var(--mint)">2 3/8</b></div>
-      </div>
-    </div>
-
-    <!-- BORROWING -->
-    <div class="card reveal" style="border-color:#fde68a;background:#fffdf5">
-      <h3 style="font-size:1.2rem;margin-bottom:6px">🔑 Віднімання з позичанням: 3 1/7 − 1 4/7</h3>
-      <p style="color:var(--muted);font-size:.95rem;margin-bottom:20px">Тут 1/7 <b>менше</b> за 4/7 — тому треба <b>позичити</b> одну цілу.</p>
-
-      <div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:22px">
-        <span id="borrowM1"></span>
-        <span style="font-size:2rem;color:var(--muted)">→</span>
-        <span id="borrowM2"></span>
-      </div>
-      <p style="text-align:center;color:var(--primary-dark);font-weight:900;font-size:.95rem;margin-bottom:20px">
-        Позичаємо 1 цілу: 3 1/7 = 2 + 7/7 + 1/7 = 2 8/7
-      </p>
-
-      <div class="op-row" style="margin-bottom:22px">
-        <span id="borrowM3"></span>
-        <span class="op-sign">−</span>
-        <span id="borrowM4"></span>
-        <span class="op-sign">=</span>
-        <span id="borrowM5"></span>
-      </div>
-
-      <div class="steps">
-        <div class="step"><b>Перевіряємо дроби:</b> 1/7 < 4/7 → треба позичати</div>
-        <div class="step"><b>Позичаємо 1 цілу:</b> 3 1/7 = 2 8/7</div>
-        <div class="step"><b>Цілі:</b> 2 − 1 = 1</div>
-        <div class="step"><b>Дроби:</b> 8/7 − 4/7 = 4/7</div>
-        <div class="step"><b>Результат:</b> <b style="color:var(--mint)">1 4/7</b></div>
-      </div>
-
-      <p style="margin-top:18px;font-size:.9rem;color:var(--muted);font-weight:700;text-align:center">
-        ✔ Перевірка: 1 4/7 + 1 4/7 = 2 8/7 = 3 1/7 — усе збігається!
+      <p style="margin-top:18px;text-align:center;color:var(--muted);font-weight:800;font-size:.9rem">
+        Запам'ятай: 6 — це не «вигадане» число, а спільний розмір шматків, на який можна розрізати і половину, і третину.
       </p>
     </div>
 
-    <!-- WHEN TO BORROW -->
-    <div class="hl reveal" style="margin-top:24px">
-      <h3>🧠 Коли треба позичати?</h3>
-      <p>Коли верхній дріб першого числа <b>менший</b> за верхній дріб другого. Тоді беремо 1 цілу і перетворюємо її на дріб з тим самим знаменником.</p>
+    <!-- tip -->
+    <div class="hl reveal">
+      <h3>🧠 Запам'ятай</h3>
+      <p>Дроби можна додавати/віднімати тільки коли вони мають <b>однаковий розмір шматків</b> (однаковий знаменник). Різні знаменники → спочатку приводимо до спільного.</p>
       <div>
-        <span class="pill">1 ціла = 7/7</span>
-        <span class="pill">1 ціла = 8/8</span>
-        <span class="pill">1 ціла = 100/100</span>
+        <span class="pill">1/2 = 3/6 = 2/4</span>
+        <span class="pill">1/3 = 2/6</span>
+        <span class="pill">1/4 = 3/12</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ VISUAL MIXED ADDITION (UPDATED WITH 6 EXAMPLES) ============ -->
-<section id="visual-mixed" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
+
+<!-- ============ MULTIPLICATION (Тема 6) ============ -->
+<section id="multiply">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-tag">Тема 5.1 · Наочні приклади</div>
-      <h2>Як зробити мішане число з неправильного дробу</h2>
-      <p class="lead">Якщо зверху (чисельник) число більше, ніж знизу (знаменник) — це неправильний дріб. Подивись, як він перетворюється на мішане число!</p>
+      <div class="sec-tag">Тема 6 · Множення дробів</div>
+      <h2>Множення дробів</h2>
+      <p class="lead">Множення дробів — найлегша дія: ніякого спільного знаменника не потрібно. Множимо верх з верхом, низ з низом.</p>
     </div>
 
-    <div class="examples-grid reveal" id="examplesGrid">
-      <!-- Заповнюється через JS -->
+    <div class="hl reveal" style="margin-bottom:26px">
+      <h3>🔑 Правило</h3>
+      <p>Чисельник × чисельник, знаменник × знаменник. Скоротити можна <b>до</b> множення — так числа менші.</p>
+      <div>
+        <span class="pill">2/3 · 4/5 = 8/15</span>
+        <span class="pill">1/2 · 2/3 = 2/6 = 1/3</span>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:8px">🍕 Що означає «помножити на дріб»?</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:18px">«2/3 від 1/2 піци» — це коли ми беремо половину піци й залишаємо від неї тільки 2 частини з 3. Результат <b>менший</b> за кожен множник — бо беремо частину від частини.</p>
+      <div class="rule-big">
+        <span class="big-frac" style="font-size:1.5rem"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span>
+        <span class="rule-arrow">·</span>
+        <span class="big-frac" style="font-size:1.5rem"><span class="num">2</span><span class="bar"></span><span class="den">3</span></span>
+        <span class="rule-arrow">=</span>
+        <span class="big-frac" style="font-size:1.5rem;color:var(--orange)"><span class="num">2</span><span class="bar"></span><span class="den">6</span></span>
+        <span class="rule-arrow">=</span>
+        <span class="big-frac" style="font-size:1.5rem;color:var(--mint)"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span>
+      </div>
+      <p class="rule-cap">1·2 = 2 (верх), 2·3 = 6 (низ), потім скоротили 2/6 до <b>1/3</b></p>
+      <div id="multGrid" style="margin-top:22px"></div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">✂️ Скорочення до множення — економить сили</h3>
+      <div class="grid-2" style="gap:18px">
+        <div style="background:#fdecec;border:2px solid #fca5a5;border-radius:16px;padding:18px">
+          <div style="font-weight:900;color:#b91c1c;margin-bottom:8px">Довго: множимо, потім скорочуємо</div>
+          <p style="font-size:.92rem;color:#7f1d1d">4/9 · 3/8 = 12/72 = 6/36 = 3/18 = 1/6</p>
+        </div>
+        <div style="background:#e8fbf3;border:2px solid #6ee7b7;border-radius:16px;padding:18px">
+          <div style="font-weight:900;color:#047857;margin-bottom:8px">Швидко: скорочуємо навхрест</div>
+          <p style="font-size:.92rem;color:#065f46">4 і 8 діляться на 4 → 1 і 2. 3 і 9 діляться на 3 → 1 і 3. Отже 1/3 · 1/2 = <b>1/6</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🔢 Множення на ціле число</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:14px">Ціле число — це дріб зі знаменником 1. Тому множимо тільки чисельник.</p>
+      <div class="op-row" style="margin-bottom:14px">
+        <span class="big-frac" style="font-size:1.4rem"><span class="num">3</span><span class="bar"></span><span class="den">8</span></span>
+        <span class="op-sign">·</span>
+        <span style="font-size:1.5rem;font-weight:900;color:var(--pink)">4</span>
+        <span class="op-sign">=</span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">12</span><span class="bar"></span><span class="den">8</span></span>
+        <span class="op-sign">=</span>
+        <span class="big-frac" style="font-size:1.4rem;color:var(--mint)"><span class="num">3</span><span class="bar"></span><span class="den">2</span></span>
+        <span class="op-sign">=</span>
+        <span class="mixed-display" style="font-size:1.5rem;color:var(--mint)"><span class="whole-num">1</span><span class="mf-frac"><span class="mf-num">1</span><span class="mf-bar"></span><span class="mf-den">2</span></span></span>
+      </div>
+      <div class="steps">
+        <div class="step"><b>5 · 2/7:</b> 5·2 = 10, знаменник 7 → 10/7 = <b>1 3/7</b></div>
+        <div class="step"><b>2/3 · 0:</b> будь-яке число помножити на 0 = <b>0</b></div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🔁 Мішані числа при множенні</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:14px">Спочатку перетворюємо мішане число в неправильний дріб, а тоді множимо.</p>
+      <div class="steps">
+        <div class="step"><b>1 1/2 · 2/3:</b> 1 1/2 = 3/2. Далі 3/2 · 2/3 = 6/6 = <b>1</b></div>
+        <div class="step"><b>2 1/4 · 4:</b> 2 1/4 = 9/4. Далі 9/4 · 4 = 36/4 = <b>9</b></div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="background:#fff7e6;border-color:#fde68a">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">❗ Типова помилка</h3>
+      <div class="grid-2" style="gap:18px">
+        <div style="background:#fdecec;border:2px solid #fca5a5;border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:1.6rem">❌</div>
+          <div style="font-weight:900;color:#b91c1c">2/3 · 4/5 = 6/8</div>
+          <div style="font-size:.85rem;color:#b91c1c;font-weight:700;margin-top:6px">Не можна додавати знаменники!</div>
+        </div>
+        <div style="background:#e8fbf3;border:2px solid #6ee7b7;border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:1.6rem">✅</div>
+          <div style="font-weight:900;color:#047857">2/3 · 4/5 = 8/15</div>
+          <div style="font-size:.85rem;color:#047857;font-weight:700;margin-top:6px">2·4 = 8 і 3·5 = 15.</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ EQUIVALENT ============ -->
-<section id="equivalent" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
+<!-- ============ DIVISION (Тема 7) ============ -->
+<section id="divide" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-tag">Тема 6</div>
-      <h2>Різні записи — одна кількість</h2>
-      <p class="lead">Подивись: половина піци може бути записана як 1/2, 2/4 або 4/8. Це те саме! Просто порізали по-різному.</p>
+      <div class="sec-tag">Тема 7 · Ділення дробів</div>
+      <h2>Ділення дробів</h2>
+      <p class="lead">Ділення — це множення на «перевернутий» дріб. Один раз зрозумієш — і більше ніколи не забудеш.</p>
     </div>
 
-    <div class="equivalent-row reveal">
-      <div class="eq-item">
-        <div id="eq1"></div>
-        <div class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">2</span></div>
-        <div style="font-size:.82rem;color:var(--muted);font-weight:800">половина</div>
-      </div>
-      <div class="eq-equals">=</div>
-      <div class="eq-item">
-        <div id="eq2"></div>
-        <div class="big-frac"><span class="num">2</span><span class="bar"></span><span class="den">4</span></div>
-        <div style="font-size:.82rem;color:var(--muted);font-weight:800">теж половина</div>
-      </div>
-      <div class="eq-equals">=</div>
-      <div class="eq-item">
-        <div id="eq3"></div>
-        <div class="big-frac"><span class="num">4</span><span class="bar"></span><span class="den">8</span></div>
-        <div style="font-size:.82rem;color:var(--muted);font-weight:800">теж половина</div>
-      </div>
-      <div class="eq-equals">=</div>
-      <div class="eq-item eq-result">
-        <div style="font-size:2.4rem;font-weight:900;line-height:1">50%</div>
-        <div style="font-size:.85rem;font-weight:800;opacity:.85">половина</div>
+    <div class="hl reveal" style="margin-bottom:26px">
+      <h3>🔑 Правило</h3>
+      <p>Щоб поділити на дріб — <b>переверни</b> дільник і <b>помнож</b>. Перший дріб не чіпаємо!</p>
+      <div>
+        <span class="pill">1/2 : 1/4 = 1/2 · 4/1 = 2</span>
+        <span class="pill">3/5 : 2/7 = 3/5 · 7/2 = 21/10</span>
       </div>
     </div>
 
-    <div class="card reveal" style="margin-top:28px;background:#fff7e6;border-color:#fde68a">
-      <p style="font-weight:800;font-size:1.05rem;text-align:center">
-        🧠 <b>Запам'ятай:</b> якщо помножити чисельник і знаменник на одне число — дріб не змінюється!
-        <br><span style="color:var(--muted);font-size:.9rem">1/2 = (1·2)/(2·2) = 2/4 = (2·2)/(4·2) = 4/8</span>
-      </p>
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:8px">🤔 Чому «перевернути» — це правильно?</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px">Питання «1/2 : 1/4» означає: <b>скільки разів чверть вміщується в половині?</b> Подивись на піцу: половина — це 2 чверті. Отже відповідь 2.</p>
+      <div class="rule-big">
+        <span class="big-frac" style="font-size:1.5rem"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span>
+        <span class="rule-arrow">:</span>
+        <span class="big-frac" style="font-size:1.5rem"><span class="num">1</span><span class="bar"></span><span class="den">4</span></span>
+        <span class="rule-arrow">=</span>
+        <span class="big-frac" style="font-size:1.5rem"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span>
+        <span class="rule-arrow">·</span>
+        <span class="big-frac" style="font-size:1.5rem;color:var(--orange)"><span class="num">4</span><span class="bar"></span><span class="den">1</span></span>
+        <span class="rule-arrow">=</span>
+        <span class="big-frac" style="font-size:1.5rem;color:var(--mint)"><span class="num">2</span><span class="bar"></span><span class="den">1</span></span>
+        <span class="rule-arrow">=</span>
+        <span style="font-size:1.6rem;font-weight:900;color:var(--mint)">2</span>
+      </div>
+      <p class="rule-cap">Дільник 1/4 перевернувся у <b>4/1</b>, а ділення стало множенням</p>
+      <div id="divGrid" style="margin-top:22px"></div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🔄 Що таке «обернений дріб»</h3>
+      <p style="color:var(--muted);font-size:.95rem;margin-bottom:16px">Обернений дріб — це той самий дріб, у якого поміняли місцями верх і низ. Їхній добуток завжди 1.</p>
+      <div class="grid-3" style="gap:14px">
+        <div class="flip-card">
+          <div class="flip-t">дріб</div>
+          <div class="flip-body">
+            <span class="big-frac" style="font-size:1.4rem"><span class="num">2</span><span class="bar"></span><span class="den">3</span></span>
+            <span class="rule-arrow">→</span>
+            <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">3</span><span class="bar"></span><span class="den">2</span></span>
+          </div>
+          <p class="rule-cap">2/3 · 3/2 = 1</p>
+        </div>
+        <div class="flip-card">
+          <div class="flip-t">дріб</div>
+          <div class="flip-body">
+            <span class="big-frac" style="font-size:1.4rem"><span class="num">5</span><span class="bar"></span><span class="den">7</span></span>
+            <span class="rule-arrow">→</span>
+            <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">7</span><span class="bar"></span><span class="den">5</span></span>
+          </div>
+          <p class="rule-cap">5/7 · 7/5 = 1</p>
+        </div>
+        <div class="flip-card">
+          <div class="flip-t">ціле число</div>
+          <div class="flip-body">
+            <span style="font-size:1.5rem;font-weight:900;color:var(--pink)">4</span>
+            <span class="rule-arrow">→</span>
+            <span class="big-frac" style="font-size:1.4rem;color:var(--orange)"><span class="num">1</span><span class="bar"></span><span class="den">4</span></span>
+          </div>
+          <p class="rule-cap">4 = 4/1, обернений — 1/4</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">📋 Алгоритм (4 кроки)</h3>
+      <div class="steps">
+        <div class="step"><b>Перевір дільник.</b> Якщо він 0 — ділити не можна! На нуль ділити заборонено.</div>
+        <div class="step"><b>Перетвори мішані числа</b> в неправильні дроби, цілі — у дріб зі знаменником 1.</div>
+        <div class="step"><b>Переверни дільник</b> (той дріб, що після знака «:») і заміни «:» на «·».</div>
+        <div class="step"><b>Помнож і скороти.</b> Якщо вийшов неправильний дріб — виділи цілу частину.</div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:24px">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">🧮 Ще приклади</h3>
+      <div class="steps">
+        <div class="step"><b>3/4 : 2:</b> 2 = 2/1 → 3/4 · 1/2 = <b>3/8</b></div>
+        <div class="step"><b>5/6 : 10/3:</b> 5/6 · 3/10 = 15/60 = <b>1/4</b></div>
+        <div class="step"><b>2 1/2 : 1/2:</b> 2 1/2 = 5/2 → 5/2 · 2/1 = 10/2 = <b>5</b></div>
+        <div class="step"><b>7/8 : 7/8:</b> 7/8 · 8/7 = 56/56 = <b>1</b> (однакові дроби завжди дають 1)</div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="background:#fff7e6;border-color:#fde68a">
+      <h3 style="font-size:1.15rem;margin-bottom:14px">❗ Типові помилки</h3>
+      <div class="grid-2" style="gap:18px">
+        <div style="background:#fdecec;border:2px solid #fca5a5;border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:1.6rem">❌</div>
+          <div style="font-weight:900;color:#b91c1c">3/4 : 1/2 = 3/4 · 1/2</div>
+          <div style="font-size:.85rem;color:#b91c1c;font-weight:700;margin-top:6px">Забули перевернути дільник!</div>
+        </div>
+        <div style="background:#e8fbf3;border:2px solid #6ee7b7;border-radius:16px;padding:18px;text-align:center">
+          <div style="font-size:1.6rem">✅</div>
+          <div style="font-weight:900;color:#047857">3/4 : 1/2 = 3/4 · 2/1 = 3/2</div>
+          <div style="font-size:.85rem;color:#047857;font-weight:700;margin-top:6px">Перевертаємо тільки дільник → 3/2 = 1 1/2</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PERCENT ============ -->
+<!-- ============ PERCENT (Тема 8) ============ -->
 <section id="percent">
   <div class="container">
     <div class="sec-head reveal">
-      <div class="sec-tag">Тема 7</div>
-      <h2>Відсотки — це дроби, тільки зручніше</h2>
-      <p class="lead">Відсоток — це дріб зі знаменником 100. Знак <b>%</b> просто замінює «/100». 50% = 50/100 = половина.</p>
+      <div class="sec-tag">Тема 8 · Відсотки</div>
+      <h2>Відсотки</h2>
+      <p class="lead">Відсоток — це дріб із знаменником 100. 1% = 1/100.</p>
     </div>
 
-    <div class="hl reveal" style="margin-bottom:28px">
-      <h3>1% = 1/100 = 0,01</h3>
-      <p>А 100% — це завжди все ціле. Ось як виглядають найважливіші відсотки:</p>
+    <div class="hl reveal" style="margin-bottom:26px">
+      <h3>🔑 Правило</h3>
+      <p>Щоб знайти 1%, треба поділити число на 100. Щоб знайти p%, — поділити на 100 і помножити на p.</p>
       <div>
-        <span class="pill">1% = 0,01</span>
-        <span class="pill">10% = 0,1</span>
-        <span class="pill">25% = ¼</span>
-        <span class="pill">50% = ½</span>
-        <span class="pill">75% = ¾</span>
-        <span class="pill">100% = ціле</span>
+        <span class="pill">50% = 1/2</span>
+        <span class="pill">25% = 1/4</span>
+        <span class="pill">20% = 1/5</span>
       </div>
     </div>
 
-    <div class="grid-4 reveal">
-      <div class="percent-card">
-        <div class="pie-viz" style="--p:25;--pc:var(--orange)"></div>
-        <div class="pct" style="color:var(--orange)">25%</div>
-        <div class="desc">чверть = ¼</div>
-      </div>
-      <div class="percent-card">
-        <div class="pie-viz" style="--p:50;--pc:var(--primary)"></div>
-        <div class="pct" style="color:var(--primary)">50%</div>
-        <div class="desc">половина = ½</div>
-      </div>
-      <div class="percent-card">
-        <div class="pie-viz" style="--p:75;--pc:var(--pink)"></div>
-        <div class="pct" style="color:var(--pink)">75%</div>
-        <div class="desc">три чверті = ¾</div>
-      </div>
-      <div class="percent-card">
-        <div class="pie-viz" style="--p:100;--pc:var(--mint)"></div>
-        <div class="pct" style="color:var(--mint)">100%</div>
-        <div class="desc">усе ціле = 1</div>
-      </div>
-    </div>
-
-    <div class="card reveal" style="margin-top:24px;display:flex;gap:24px;align-items:center;flex-wrap:wrap">
-      <div style="font-size:2.6rem">🍫</div>
-      <div style="flex:1;min-width:220px">
-        <h4 style="font-weight:900;margin-bottom:6px">Приклад з життя</h4>
-        <p style="color:var(--muted);font-size:.95rem">Шоколадка має 20 квадратиків. Ти з'їв 5. Скільки це відсотків?</p>
-        <div style="margin-top:10px;font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <span class="big-frac" style="font-size:1.2rem;color:var(--primary)"><span class="num">5</span><span class="bar"></span><span class="den">20</span></span>
-          <span>=</span>
-          <span class="big-frac" style="font-size:1.2rem;color:var(--primary)"><span class="num">25</span><span class="bar"></span><span class="den">100</span></span>
-          <span>=</span>
-          <span style="color:var(--mint);background:#e8fbf3;padding:4px 14px;border-radius:10px">25%</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONVERT ============ -->
-<section id="convert" style="background:linear-gradient(180deg,var(--bg),#fff,var(--bg))">
-  <div class="container">
-    <div class="sec-head reveal">
-      <div class="sec-tag">Тема 8</div>
-      <h2>Таблиця-шпаргалка</h2>
-      <p class="lead">Один і той самий шматок — три способи запису. Роздрукуй і повісь над столом.</p>
-    </div>
-
-    <div class="table-wrap reveal">
-      <table>
-        <thead>
-          <tr><th>Дріб</th><th>Десятковий</th><th>Відсоток</th><th>Як сказати</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span></td><td>0,5</td><td><b style="color:var(--primary)">50%</b></td><td>половина</td></tr>
-          <tr><td><span class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">4</span></span></td><td>0,25</td><td><b style="color:var(--primary)">25%</b></td><td>чверть</td></tr>
-          <tr><td><span class="big-frac"><span class="num">3</span><span class="bar"></span><span class="den">4</span></span></td><td>0,75</td><td><b style="color:var(--primary)">75%</b></td><td>три чверті</td></tr>
-          <tr><td><span class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">5</span></span></td><td>0,2</td><td><b style="color:var(--primary)">20%</b></td><td>п'ята частина</td></tr>
-          <tr><td><span class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">10</span></span></td><td>0,1</td><td><b style="color:var(--primary)">10%</b></td><td>десята частина</td></tr>
-          <tr><td><span class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span></td><td>0,333…</td><td><b style="color:var(--primary)">33,3%</b></td><td>третина</td></tr>
-          <tr><td><span class="big-frac"><span class="num">1</span><span class="bar"></span><span class="den">1</span></span></td><td>1</td><td><b style="color:var(--mint)">100%</b></td><td>ціле</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="grid-3 reveal" style="margin-top:22px">
-      <div class="card" style="text-align:center">
-        <div style="font-size:1.8rem;margin-bottom:6px">🔢</div>
-        <b style="font-size:.95rem">Дріб → %</b>
-        <p style="color:var(--muted);font-size:.88rem;margin-top:4px">× 100 і додай знак %</p>
-      </div>
-      <div class="card" style="text-align:center">
-        <div style="font-size:1.8rem;margin-bottom:6px">💯</div>
-        <b style="font-size:.95rem">% → десятковий</b>
-        <p style="color:var(--muted);font-size:.88rem;margin-top:4px">поділи на 100</p>
-      </div>
-      <div class="card" style="text-align:center">
-        <div style="font-size:1.8rem;margin-bottom:6px">↩️</div>
-        <b style="font-size:.95rem">Десятковий → %</b>
-        <p style="color:var(--muted);font-size:.88rem;margin-top:4px">перенеси кому на 2 знаки</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ QUIZ ============ -->
-<section id="quiz" style="background:linear-gradient(180deg,var(--bg),#fff)">
-  <div class="container">
-    <div class="sec-head center reveal">
-      <div class="sec-tag">Перевір себе</div>
-      <h2>Міні-тест</h2>
-      <p class="lead">8 простих питань. Не хвилюйся — якщо помилишся, я одразу підкажу правильну відповідь.</p>
-    </div>
-
-    <div class="quiz reveal" id="quizBox">
-      <div id="questions"></div>
-      <div class="score" id="score"></div>
-    </div>
+    <div class="grid-auto reveal" id="percentCards"></div>
   </div>
 </section>
 
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="container">
-    <p style="font-size:1.1rem;margin-bottom:8px"><b>🍕 Дроби — просто!</b> Зроблено з любов'ю для тих, кому «складно».</p>
+    <p style="font-weight:900;font-size:1.1rem;margin-bottom:6px">🍕 Дроби та відсотки</p>
     <p style="font-size:.9rem;opacity:.7">Повторюй по 5 хвилин на день — і математика стане твоєю подругою <span class="heart">♥</span></p>
   </div>
 </footer>
