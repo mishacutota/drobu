@@ -485,3 +485,38 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   prev.addEventListener('click', () => { if (idx > 0) { idx--; render(); } });
   render();
 })();
+
+/* format mixed numbers (like "1 1/2") in theory text */
+(function () {
+  function formatNode(node) {
+    if (node.nodeType !== 3) return;
+    const text = node.nodeValue;
+    if (!/\d+\s+\d+\/\d+/.test(text)) return;
+    const html = text.replace(/(\d+)\s+(\d+)\/(\d+)/g, function (m, w, n, d) {
+      const W = parseInt(w, 10), N = parseInt(n, 10), Dn = parseInt(d, 10);
+      if (W <= 0) return N + '/' + Dn;
+      return mixedHTML(W, N, Dn, '1.15rem');
+    });
+    if (html === text) return;
+    const span = document.createElement('span');
+    span.innerHTML = html;
+    node.parentNode.replaceChild(span, node);
+  }
+  function walk(root) {
+    const skip = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT']);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => {
+        const p = n.parentNode;
+        if (!p || skip.has(p.nodeName)) return NodeFilter.FILTER_REJECT;
+        if (p.closest && p.closest('.quiz')) return NodeFilter.FILTER_REJECT; // quiz already formatted
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(formatNode);
+  }
+  function run() { walk(document.body); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
