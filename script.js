@@ -255,62 +255,17 @@ document.getElementById('cutThirdBefore').innerHTML = makePizza(3, [1, 2], 150);
 document.getElementById('cutThirdAfter').innerHTML = makePizza(6, [0, 1], 150);
 
 /* ============================================================
-   MULTIPLICATION GRID  (2/3 · 4/5)
-   ============================================================ */
-function mulGrid(aNum, aDen, bNum, bDen) {
-  const rows = aDen, cols = bDen;
-  let cells = '';
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const inA = r < aNum;
-      const inB = c < bNum;
-      let cls = 'grid-cell';
-      if (inA && inB) cls += ' on-r';
-      else if (inA) cls += ' on-a';
-      else if (inB) cls += ' on-b';
-      cells += `<div class="${cls}"></div>`;
-    }
-  }
-  return `
-    <div class="grid-visual" style="grid-template-columns:repeat(${cols},30px)">${cells}</div>
-    <div class="grid-legend">
-      <span><i style="background:linear-gradient(135deg,var(--orange),#fbbf24)"></i>${aNum}/${aDen} піци</span>
-      <span><i style="background:linear-gradient(135deg,var(--primary),var(--pink))"></i>${bNum}/${bDen} від неї</span>
-      <span><i style="background:linear-gradient(135deg,var(--mint),var(--sky))"></i>результат ${aNum * bNum}/${aDen * bDen}</span>
-    </div>
-  `;
-}
-
-document.getElementById('multGrid').innerHTML = mulGrid(2, 3, 4, 5) + `
-  <p class="rule-cap" style="margin-top:16px">
-    Уся піца розбита на <b>3 · 5 = 15</b> клітинок. Ми взяли <b>2 · 4 = 8</b> зелених. Отже <b>8/15</b>.
-  </p>
-`;
-
-/* ============================================================
-   DIVISION VISUAL (1/2 : 1/4 = 2)
-   ============================================================ */
-document.getElementById('divGrid').innerHTML = `
-  <div class="seg-stack">
-    <div>
-      <div class="seg-cap" style="color:var(--orange)">1/2 = 2/4 — половина піци</div>
-      ${segBar(4, ['filled a','filled a','',''])}
-    </div>
-    <div class="seg-op">:</div>
-    <div>
-      <div class="seg-cap" style="color:var(--primary)">1/4 — один шматок-чверть</div>
-      ${segBar(4, ['filled b','','',''])}
-    </div>
-    <div class="seg-op">=</div>
-    <div>
-      <div class="seg-cap" style="color:var(--mint)">2 — стільки чвертей вміщується</div>
-      ${segBar(4, ['filled r','filled r','',''])}
-    </div>
-  </div>
-  <p class="rule-cap" style="margin-top:14px">
-    Ділення питає «<b>скільки разів</b> дільник вміщується в першому дробі». У половині — <b>2</b> чверті.
-  </p>
-`;
+    MULTIPLICATION ON PIZZA: 1/2 · 2/3 = 1/3
+    ============================================================ */
+(function () {
+  const before = document.getElementById('mpBefore');
+  const after = document.getElementById('mpAfter');
+  if (!before || !after) return;
+  // до: піца на 6, їмо половину (3/6)
+  before.innerHTML = makePizza(6, [3, 4, 5], 150);
+  // після: з цієї половини залишаємо 2/3 → 2/6 = 1/3
+  after.innerHTML = makePizza(6, [0, 1, 3, 4, 5], 150);
+})();
 
 /* ============================================================
    MIXED NUMBERS
@@ -453,3 +408,80 @@ if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
     });
   });
 }
+
+/* ---------- MULTIPLY: CROSS-CANCELLING MINI-PRESENTATION ---------- */
+(function () {
+  const numA = document.getElementById('mxNumA');
+  const denA = document.getElementById('mxDenA');
+  const numB = document.getElementById('mxNumB');
+  const denB = document.getElementById('mxDenB');
+  const result = document.getElementById('mxResult');
+  const cap = document.getElementById('mulXCap');
+  const stepNum = document.getElementById('mulXStepNum');
+  const dots = document.getElementById('mulXDots');
+  const prev = document.getElementById('mulXPrev');
+  const next = document.getElementById('mulXNext');
+  if (!numA || !cap) return;
+
+  const strike = el => el.classList.add('strike');
+  const unstrike = (el, val) => {
+    el.classList.remove('strike');
+    el.textContent = val;
+    el.classList.add('new');
+  };
+
+  const steps = [
+    {
+      cap: 'Перед множенням шукаємо пари по діагоналі: чисельник одного дробу і знаменник іншого.',
+      apply() {}
+    },
+    {
+      cap: 'Перша пара по діагоналі: 4 і 8. Обидва діляться на 4 — закреслюємо.',
+      apply() { strike(numA); strike(denB); }
+    },
+    {
+      cap: '4 ÷ 4 = 1, 8 ÷ 4 = 2. Числа стали менші.',
+      apply() { unstrike(numA, '1'); unstrike(denB, '2'); }
+    },
+    {
+      cap: 'Друга пара по діагоналі: 3 і 9. Обидва діляться на 3 — закреслюємо.',
+      apply() { strike(numB); strike(denA); }
+    },
+    {
+      cap: '3 ÷ 3 = 1, 9 ÷ 3 = 3. Все скорочено!',
+      apply() { unstrike(numB, '1'); unstrike(denA, '3'); }
+    },
+    {
+      cap: 'Множимо: 1×1=1, 3×2=6 → 1/6.',
+      apply() { result.style.opacity = '1'; }
+    }
+  ];
+
+  function resetAll() {
+    numA.textContent = '4'; denA.textContent = '9';
+    numB.textContent = '3'; denB.textContent = '8';
+    [numA, denA, numB, denB].forEach(el => el.classList.remove('strike', 'new'));
+    result.style.opacity = '0';
+  }
+
+  let idx = 0;
+  function render() {
+    resetAll();
+    for (let i = 0; i <= idx; i++) steps[i].apply();
+    cap.textContent = steps[idx].cap;
+    stepNum.textContent = `Крок ${idx + 1} з ${steps.length}`;
+    prev.disabled = idx === 0;
+    if (idx === steps.length - 1) {
+      next.disabled = true;
+      next.textContent = 'Готово! ✓';
+    } else {
+      next.disabled = false;
+      next.textContent = 'Далі →';
+    }
+    dots.innerHTML = steps.map((_, i) => `<i class="${i === idx ? 'on' : ''}"></i>`).join('');
+  }
+
+  next.addEventListener('click', () => { if (idx < steps.length - 1) { idx++; render(); } });
+  prev.addEventListener('click', () => { if (idx > 0) { idx--; render(); } });
+  render();
+})();
