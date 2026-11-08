@@ -15,21 +15,48 @@ window.DQ = window.DQ || {};
     }
     return a;
   };
+  DQ.parseNum = function (v) {
+    if (v == null) return null;
+    const s = String(v).trim();
+    let m = s.match(/^(-?)(\d+)\s+(\d+)\/(\d+)$/);
+    if (m) {
+      const sign = m[1] === '-' ? -1 : 1;
+      const w = +m[2], n = +m[3], d = +m[4];
+      if (!d) return null;
+      return sign * (w + n / d);
+    }
+    m = s.match(/^(-?)(\d+)\/(\d+)$/);
+    if (m) {
+      const sign = m[1] === '-' ? -1 : 1;
+      const n = +m[2], d = +m[3];
+      if (!d) return null;
+      return sign * n / d;
+    }
+    m = s.match(/^(-?\d+)$/);
+    if (m) return +m[0];
+    return null;
+  };
+  DQ.answerKey = function (v) {
+    const n = DQ.parseNum(v);
+    if (n != null && isFinite(n)) return 'N:' + n.toFixed(10);
+    return 'S:' + String(v).trim();
+  };
   DQ.buildOpts = function (correct, distractorFn) {
-    const set = new Set([correct]);
-    const arr = [correct];
+    const correctKey = DQ.answerKey(correct);
+    const set = new Set([correctKey]);
+    const arr = [String(correct)];
     let guard = 0;
-    while (arr.length < 4 && guard < 200) {
+    while (arr.length < 4 && guard < 500) {
       guard++;
       const d = distractorFn();
       if (d == null) continue;
-      const s = String(d);
-      if (!set.has(s)) { set.add(s); arr.push(s); }
+      const key = DQ.answerKey(d);
+      if (!set.has(key)) { set.add(key); arr.push(String(d)); }
     }
     let pad = 1;
-    while (arr.length < 4) { arr.push(correct + ' ' + pad++); }
+    while (arr.length < 4) { arr.push(String(correct) + ' #' + pad++); }
     const sh = DQ.shuffle(arr);
-    return sh.map(t => ({ text: t, correct: t === correct }));
+    return sh.map(t => ({ text: t, correct: DQ.answerKey(t) === correctKey }));
   };
   DQ.toMixedStr = function (num, den) {
     if (den === 0) return '0';

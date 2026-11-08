@@ -12,12 +12,13 @@
     const scoreEl = root.querySelector('[data-quiz-score]');
     const nextBtn = root.querySelector('[data-quiz-next]');
     let correctCount = 0, totalCount = 0, answered = false;
+    let currentGen = genName;
     function renderQuestion() {
       answered = false;
       fbEl.textContent = '';
       fbEl.className = 'feedback';
       optsEl.innerHTML = '';
-      const q = DQ.gens[genName]();
+      const q = DQ.gens[currentGen]();
       if (visualEl) visualEl.innerHTML = q.visual || '';
       promptEl.innerHTML = DQ.formatMixed(q.prompt);
       const opts = DQ.shuffle(q.options.map(o => ({ text: DQ.formatMixed(o.text), correct: !!o.correct })));
@@ -49,12 +50,33 @@
       });
     }
     if (nextBtn) nextBtn.addEventListener('click', renderQuestion);
+    const levelBtns = root.querySelectorAll('[data-level]');
+    levelBtns.forEach(btn => {
+      btn.addEventListener('click', function () {
+        const lvl = btn.dataset.level;
+        const newGen = (lvl === 'easy') ? 'mixedEasy' : 'mixed';
+        if (newGen === currentGen) return;
+        currentGen = newGen;
+        levelBtns.forEach(b => b.classList.toggle('ghost', b !== btn));
+        correctCount = 0; totalCount = 0; answered = false;
+        fbEl.textContent = '';
+        fbEl.className = 'feedback';
+        scoreEl.textContent = 'Правильно: 0 з 0';
+        scoreEl.style.display = 'block';
+        renderQuestion();
+      });
+    });
+    levelBtns.forEach(b => {
+      const isEasy = b.dataset.level === 'easy';
+      const active = (isEasy && currentGen === 'mixedEasy') || (!isEasy && currentGen === 'mixed');
+      b.classList.toggle('ghost', !active);
+    });
     renderQuestion();
   }
   const topics = [
     ['quiz-story', 'story'],
     ['quiz-parts', 'parts'],
-    ['quiz-mixed', 'mixed'],
+    ['quiz-mixed', 'mixedEasy'],
     ['quiz-adding', 'adding'],
     ['quiz-diffden', 'diffden'],
     ['quiz-multiply', 'multiply'],

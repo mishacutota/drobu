@@ -124,6 +124,16 @@
     return { prompt: w1 + ' ' + n1 + '/' + d + ' − ' + w2 + ' ' + n2 + '/' + d + ' = ?', visual: '', options, explain: 'Позичаємо 1 цілу. Результат ' + correctFinal + '.' };
   };
 
+  G.mixedEasy = function () {
+    // Легкий рівень: ті самі завдання, але без віднімання з позичанням (заниманням).
+    let q, guard = 0;
+    do {
+      q = G.mixed();
+      guard++;
+    } while (guard < 20 && q.explain && q.explain.indexOf('Позичаємо') !== -1);
+    return q;
+  };
+
   G.adding = function () {
     const type = rand(0, 4);
     if (type === 0) {
